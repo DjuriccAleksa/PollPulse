@@ -1,14 +1,32 @@
+using PollPulse.API.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.ConfigureCors();
+builder.Services.ConfigureSqlSqerverContext(builder.Configuration);
+builder.Services.ConfigureIdentity();
+builder.Services.ConfigureUnitOfWorkRepository();
+builder.Services.ConfigureSendGrid(builder.Configuration);
+
+
+builder.Services.AddAutoMapper(typeof(PollPulse.CommandsAndQueries.Startup).Assembly);
+builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(typeof(PollPulse.CommandsAndQueries.Startup).Assembly));
+builder.Services.AddSendGridConfiguration(builder.Configuration);
+
+builder.Services.AddControllers()
+    .AddApplicationPart(typeof(PollPulse.Presentation.Startup).Assembly);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
+app.ConfigureExceptionHandling();
 
 app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
