@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PollPulse.CommandsAndQueries
 {
-    public class AssemblyReference
+    public class Startup
     {
         
     }
