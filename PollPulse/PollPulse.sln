@@ -3,7 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollPulse.API", "PollPulse.API\PollPulse.API.csproj", "{08B3ED31-3A3B-4E2A-BDE9-92902250AC07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.API", "PollPulse.API\PollPulse.API.csproj", "{08B3ED31-3A3B-4E2A-BDE9-92902250AC07}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Entities", "PollPulse.Entities\PollPulse.Entities.csproj", "{77C493BF-761C-42E6-B863-A022F9AA1746}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Repository", "PollPuls.Repository\PollPulse.Repository.csproj", "{BF70E65A-542E-4443-9ED4-D1E595AA593B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollPulse.Repository.Interfaces", "PollPulse.Repository.Interfaces\PollPulse.Repository.Interfaces.csproj", "{5131E25D-08EB-424C-82F7-51335E7517C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollPulse.CommandsAndQueries", "PollPulse.CommandsAndQueries\PollPulse.CommandsAndQueries.csproj", "{F6E059BB-0AE3-4FD7-B35D-5D1660A3144F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollPulse.Presentation", "PollPulse.Presentation\PollPulse.Presentation.csproj", "{371BB753-1F84-4C69-B977-9090B2889B64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollPulse.Common", "PollPulse.Common\PollPulse.Common.csproj", "{D26FCA5C-E138-4093-8021-C03BDFFA57C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +27,30 @@ Global
 		{08B3ED31-3A3B-4E2A-BDE9-92902250AC07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08B3ED31-3A3B-4E2A-BDE9-92902250AC07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08B3ED31-3A3B-4E2A-BDE9-92902250AC07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77C493BF-761C-42E6-B863-A022F9AA1746}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77C493BF-761C-42E6-B863-A022F9AA1746}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77C493BF-761C-42E6-B863-A022F9AA1746}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77C493BF-761C-42E6-B863-A022F9AA1746}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF70E65A-542E-4443-9ED4-D1E595AA593B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF70E65A-542E-4443-9ED4-D1E595AA593B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF70E65A-542E-4443-9ED4-D1E595AA593B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF70E65A-542E-4443-9ED4-D1E595AA593B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5131E25D-08EB-424C-82F7-51335E7517C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5131E25D-08EB-424C-82F7-51335E7517C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5131E25D-08EB-424C-82F7-51335E7517C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5131E25D-08EB-424C-82F7-51335E7517C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6E059BB-0AE3-4FD7-B35D-5D1660A3144F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6E059BB-0AE3-4FD7-B35D-5D1660A3144F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6E059BB-0AE3-4FD7-B35D-5D1660A3144F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6E059BB-0AE3-4FD7-B35D-5D1660A3144F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{371BB753-1F84-4C69-B977-9090B2889B64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{371BB753-1F84-4C69-B977-9090B2889B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{371BB753-1F84-4C69-B977-9090B2889B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{371BB753-1F84-4C69-B977-9090B2889B64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D26FCA5C-E138-4093-8021-C03BDFFA57C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D26FCA5C-E138-4093-8021-C03BDFFA57C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D26FCA5C-E138-4093-8021-C03BDFFA57C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D26FCA5C-E138-4093-8021-C03BDFFA57C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
