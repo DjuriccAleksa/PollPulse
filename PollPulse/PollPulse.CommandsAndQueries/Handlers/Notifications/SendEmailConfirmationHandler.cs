@@ -1,35 +1,25 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using PollPulse.CommandsAndQueries.Notifications;
 using PollPulse.Repository.Interfaces.Unit_of_work;
-using UserEntity = PollPulse.Entities.Models.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using System.Web;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 using Microsoft.Extensions.Options;
 using PollPulse.Entities.Options;
 using System.Reflection;
 using PollPulse.Common.DTO;
+using System.Net.Mail;
+using System.Net;
 
 namespace PollPulse.CommandsAndQueries.Handlers.Notifications
 {
     public record SendEmailConfirmationHandler : INotificationHandler<UserRegisteredEvent>
     {
         private readonly IUnitOfWorkRepository _repository;
-        private readonly SendGridConfiguration _configuration;
-        private readonly ISendGridClient _sendGrid;
+        private readonly SmtpConfiguration _smptConfiguration;
 
-        public SendEmailConfirmationHandler(IUnitOfWorkRepository repository, IOptions<SendGridConfiguration> configuration, ISendGridClient sendGrid)
+        public SendEmailConfirmationHandler(IUnitOfWorkRepository repository, IOptions<SmtpConfiguration> configuration)
         {
             _repository = repository;
-            _configuration = configuration.Value;
-            _sendGrid = sendGrid;
+            _smptConfiguration = configuration.Value;
         }
         public async Task Handle(UserRegisteredEvent notification, CancellationToken cancellationToken)
         {
@@ -37,11 +27,8 @@ namespace PollPulse.CommandsAndQueries.Handlers.Notifications
 
             var token = await _repository.UserRepository.GenerateTokenForEmailConfirmation(userForDb);
 
-            var baseUrl = _configuration.BaseUrl;
-            var confirmationLink = $"{baseUrl}/users/emailconfirmation/?token={HttpUtility.UrlEncode(token)}&username={userForDb.UserName}";
-
-            var from = new EmailAddress(_configuration.FromEmail, _configuration.FromName);
-            var to = new EmailAddress(userForDb.Email);
+            var baseUrl = _smptConfiguration.BaseUrl;
+            var confirmationLink = $"{baseUrl}/users/emailconfirmation/?token={HttpUtility.UrlEncode(token)}&guid={userForDb.Guid}";
 
             var assemblyWithEmailText = Assembly.GetAssembly(typeof(UserRegisterDTO));
             var fileName = "PollPulse.Common.Resources.EmailHtmlText.txt";
@@ -52,10 +39,22 @@ namespace PollPulse.CommandsAndQueries.Handlers.Notifications
 
             emailContent = emailContent.Replace("ConfirmationLinkPlaceholder", confirmationLink);
 
-            var msg = MailHelper.CreateSingleEmail(from, to, "PollPulse - Complete your registration", emailContent, emailContent);
+            var clien = new SmtpClient(_smptConfiguration.Server, _smptConfiguration.Port)
+            {
+                Credentials = new NetworkCredential(_smptConfiguration.Email, _smptConfiguration.Password),
+                EnableSsl = true
+            };
 
-            var res = await _sendGrid.SendEmailAsync(msg, cancellationToken);
+            var mailMessage = new MailMessage()
+            {
+                From = new MailAddress(_smptConfiguration.Email!, _smptConfiguration.Username!),
+                Subject = "PollPulse - Complete your registration",
+                Body = emailContent,
+                IsBodyHtml = true,
+            };
 
+            mailMessage.To.Add(new MailAddress(userForDb.Email!));
+            clien.Send(mailMessage);
         }
     }
 }

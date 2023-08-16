@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using PollPulse.CommandsAndQueries.Commands.User;
+using PollPulse.CommandsAndQueries.Commands.UserCommands;
 using PollPulse.CommandsAndQueries.Interfaces;
 using PollPulse.Repository.Interfaces.Unit_of_work;
 
-namespace PollPulse.CommandsAndQueries.Handlers.User
+namespace PollPulse.CommandsAndQueries.Handlers.UserCommandsHandlers
 {
     public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, (bool Success, string Message)>
     {

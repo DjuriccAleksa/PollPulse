@@ -18,10 +18,10 @@ namespace PollPulse.Repository.Context
             
         }
 
-        public DbSet<User> AppUsers{ get; }
-        public DbSet<Survey> Surveys { get;  }
-        public DbSet<Question> Questions{ get; }
-        public DbSet<GivenAnswer> GivenAnswers { get; }
+        public DbSet<User> AppUsers{ get; set; }
+        public DbSet<Survey> Surveys { get; set; }
+        public DbSet<Question> Questions{ get; set; }
+        public DbSet<GivenAnswer> GivenAnswers { get; set; }
         public DbSet<OpenedAnswer> OpenedAnswers{ get; set; }
         public DbSet<ClosedAnswer> ClosedAnswers{ get; set; }
         public DbSet<GivenClosedAnswer> GivenClosedAnswers { get; set; }

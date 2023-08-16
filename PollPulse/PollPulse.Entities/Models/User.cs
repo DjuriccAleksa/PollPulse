@@ -5,7 +5,7 @@ namespace PollPulse.Entities.Models
 {
     public class User : IdentityUser<int>, IEntity
     {
-        public Guid Guid { get; set; }
+        public Guid Guid { get; set; } 
         public string FirstName { get; set; }
         public string LastName { get; set; }
 

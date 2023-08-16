@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PollPulse.CommandsAndQueries.Commands.User;
+using PollPulse.CommandsAndQueries.Commands.UserCommands;
 using PollPulse.CommandsAndQueries.Notifications;
 using PollPulse.Common.DTO;
 
@@ -57,9 +57,9 @@ namespace PollPulse.Presentation.Controllers
         }
 
         [HttpGet("emailconfirmation")]
-        public async Task<IActionResult> ConfirmUserEmail(string token, string username)
+        public async Task<IActionResult> ConfirmUserEmail(string token, string guid)
         {
-            var result = await _sender.Send(new ConfirmUserEmailCommand(token, username));
+            var result = await _sender.Send(new ConfirmUserEmailCommand(token, Guid.Parse(guid)));
 
             if (!result.Succeeded)
                 return BadRequest("Error in email confirmation.");
