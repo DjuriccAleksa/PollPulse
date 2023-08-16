@@ -1,14 +1,10 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using PollPulse.Entities.Models;
 using PollPulse.Entities.Options;
 using PollPulse.Repository.Context;
 using PollPulse.Repository.Interfaces.Unit_of_work;
 using PollPulse.Repository.Unit_of_work;
-using SendGrid;
-using System.Reflection.Emit;
 
 namespace PollPulse.API.Extensions
 {
@@ -53,14 +49,8 @@ namespace PollPulse.API.Extensions
 
         public static void ConfigureUnitOfWorkRepository(this IServiceCollection services) =>
             services.AddScoped<IUnitOfWorkRepository, UnitOfWorkRepository>();
-        public static void AddSendGridConfiguration(this IServiceCollection services, IConfiguration configuration) =>
-            services.Configure<SendGridConfiguration>(configuration.GetSection("SendGrid"));
-        public static void ConfigureSendGrid(this IServiceCollection services, IConfiguration configuration) => services.AddSingleton<ISendGridClient>(provider =>
-        {
-            var sendGridConfiguration = new SendGridConfiguration();
-            configuration.Bind(sendGridConfiguration.Section, sendGridConfiguration);
-
-            return new SendGridClient(sendGridConfiguration.ApiKey);
-        });
+        public static void AddSmtpConfiguration(this IServiceCollection services, IConfiguration configuration) =>
+            services.Configure<SmtpConfiguration>(configuration.GetSection("SmtpSettings"));
+       
     }
 }

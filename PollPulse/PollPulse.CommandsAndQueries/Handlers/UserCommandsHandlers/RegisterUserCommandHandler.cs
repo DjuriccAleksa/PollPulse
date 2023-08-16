@@ -1,19 +1,13 @@
-﻿using MediatR;
-using PollPulse.CommandsAndQueries.Commands.User;
+﻿using PollPulse.CommandsAndQueries.Commands.UserCommands;
 using PollPulse.CommandsAndQueries.Interfaces;
 using PollPulse.Repository.Interfaces.Unit_of_work;
-using UserEntity = PollPulse.Entities.Models.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using PollPulse.Entities.Models;
 
-namespace PollPulse.CommandsAndQueries.Handlers.User
+namespace PollPulse.CommandsAndQueries.Handlers.UserCommandsHandlers
 {
-    public sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, (IdentityResult registerResult, UserEntity user)>
+    public sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, (IdentityResult registerResult, User user)>
     {
         private readonly IUnitOfWorkRepository _repository;
         private readonly IMapper _mapper;
@@ -24,9 +18,10 @@ namespace PollPulse.CommandsAndQueries.Handlers.User
             _mapper = mapper;
         }
 
-        public async Task<(IdentityResult registerResult, UserEntity user)> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+        public async Task<(IdentityResult registerResult, User user)> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var user = _mapper.Map<UserEntity>(request.user);
+            var user = _mapper.Map<User>(request.user);
+            user.Guid = Guid.NewGuid();
 
             var registerResult = await _repository.UserRepository.RegisterUser(user, request.user.Password);
 

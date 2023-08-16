@@ -11,4 +11,9 @@ namespace PollPulse.CommandsAndQueries.Interfaces
     {
 
     }
+
+    public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand> where TCommand : ICommand
+    {
+
+    }
 }

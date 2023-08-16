@@ -27,11 +27,12 @@ namespace PollPulse.Repository.Unit_of_work
         {
             _context = context;
 
-            _userRepository = new Lazy<IUserRepository>(() => new UserRepository(userManager, signInManager));
+            _userRepository = new Lazy<IUserRepository>(() => new UserRepository(userManager, signInManager, context));
+            _surveyRepository = new Lazy<ISurveyRepository>(() => new SurveyRepository(context));
         }
         public IUserRepository UserRepository => _userRepository.Value;
 
-        public ISurveyRepository SurveyRepository => throw new NotImplementedException();
+        public ISurveyRepository SurveyRepository => _surveyRepository.Value;
 
         public IQuestionRepository QuestionRepository => throw new NotImplementedException();
 

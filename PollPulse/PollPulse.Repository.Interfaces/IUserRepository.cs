@@ -13,7 +13,7 @@ namespace PollPulse.Repository.Interfaces
         Task<IdentityResult> RegisterUser(User user, string password);
         Task<SignInResult> LoginUser(string username, string password);
         Task<User?> GetUserById(int id);
-        Task<User?> GetUserByUsername(string username);
+        Task<User?> GetUserByGuid(Guid guid);
         Task<string> GenerateTokenForEmailConfirmation(User user);
         Task<IdentityResult> ConfirmUserEmail(User user, string token);
     }
