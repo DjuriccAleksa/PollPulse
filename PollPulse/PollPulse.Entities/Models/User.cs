@@ -3,7 +3,7 @@ using PollPulse.Entities.Models.Base;
 
 namespace PollPulse.Entities.Models
 {
-    public class User : IdentityUser<int>, IEntity
+    public class User : IdentityUser<long>, IEntity
     {
         public Guid Guid { get; set; } 
         public string FirstName { get; set; }

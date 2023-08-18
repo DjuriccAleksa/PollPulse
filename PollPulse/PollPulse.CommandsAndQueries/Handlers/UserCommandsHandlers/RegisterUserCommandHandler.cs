@@ -20,10 +20,10 @@ namespace PollPulse.CommandsAndQueries.Handlers.UserCommandsHandlers
 
         public async Task<(IdentityResult registerResult, User user)> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var user = _mapper.Map<User>(request.user);
+            var user = _mapper.Map<User>(request.User);
             user.Guid = Guid.NewGuid();
 
-            var registerResult = await _repository.UserRepository.RegisterUser(user, request.user.Password);
+            var registerResult = await _repository.UserRepository.RegisterUser(user, request.User.Password);
 
             return (registerResult, user);
         }

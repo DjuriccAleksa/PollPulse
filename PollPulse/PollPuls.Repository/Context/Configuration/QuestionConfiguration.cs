@@ -17,7 +17,7 @@ namespace PollPulse.Repository.Context.Configuration
 
             builder.Property(q => q.Text)
                 .IsRequired()
-                .HasMaxLength(int.MaxValue); // ili druga vrednost koju ste imali na umu
+                .HasMaxLength(int.MaxValue); 
 
             builder.Property(q => q.QuestionType)
                 .IsRequired()

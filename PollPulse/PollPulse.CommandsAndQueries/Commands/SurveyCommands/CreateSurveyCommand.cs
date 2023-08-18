@@ -1,5 +1,5 @@
 ﻿using PollPulse.CommandsAndQueries.Interfaces;
-using PollPulse.Common.DTO;
+using PollPulse.Common.DTO.SurveysDTOs;
 
 namespace PollPulse.CommandsAndQueries.Commands.SurveyCommands
 {

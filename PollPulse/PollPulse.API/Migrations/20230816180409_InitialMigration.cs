@@ -15,7 +15,7 @@ namespace PollPulse.API.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -25,12 +25,12 @@ namespace PollPulse.API.Migrations
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                 });
-            
+
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(18)", maxLength: 18, nullable: false),
@@ -61,7 +61,7 @@ namespace PollPulse.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<long>(type: "bigint", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -82,7 +82,7 @@ namespace PollPulse.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -104,7 +104,7 @@ namespace PollPulse.API.Migrations
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -121,8 +121,8 @@ namespace PollPulse.API.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    RoleId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -145,7 +145,7 @@ namespace PollPulse.API.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -165,13 +165,14 @@ namespace PollPulse.API.Migrations
                 name: "Surveys",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Guid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", maxLength: 2147483647, nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    DateFinished = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UserId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -188,11 +189,11 @@ namespace PollPulse.API.Migrations
                 name: "Questions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Text = table.Column<string>(type: "nvarchar(max)", maxLength: 2147483647, nullable: false),
                     QuestionType = table.Column<string>(type: "nvarchar(80)", nullable: false),
-                    SurveyId = table.Column<int>(type: "int", nullable: false)
+                    SurveyId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -207,19 +208,39 @@ namespace PollPulse.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClosedAnswers",
+                name: "SurveyResponses",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateAnswered = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
+                    SurveyId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SurveyResponses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SurveyResponses_Surveys_SurveyId",
+                        column: x => x.SurveyId,
+                        principalTable: "Surveys",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ClosedQuestionOptions",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TextOption = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    QuestionId = table.Column<int>(type: "int", nullable: false)
+                    QuestionId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ClosedAnswers", x => x.Id);
+                    table.PrimaryKey("PK_ClosedQuestionOptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ClosedAnswers_Questions_QuestionId",
+                        name: "FK_ClosedQuestionOptions_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
@@ -227,67 +248,72 @@ namespace PollPulse.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GivenAnswers",
+                name: "QuestionResponses",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DateAnswered = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
-                    QuestionId = table.Column<int>(type: "int", nullable: false)
+                    QuestionId = table.Column<long>(type: "bigint", nullable: false),
+                    SurveyResponseId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GivenAnswers", x => x.Id);
+                    table.PrimaryKey("PK_QuestionResponses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GivenAnswers_Questions_QuestionId",
+                        name: "FK_QuestionResponses_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GivenClosedAnswers",
-                columns: table => new
-                {
-                    GivenAnswerId = table.Column<int>(type: "int", nullable: false),
-                    ClosedAnswerId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GivenClosedAnswers", x => new { x.GivenAnswerId, x.ClosedAnswerId });
                     table.ForeignKey(
-                        name: "FK_GivenClosedAnswers_ClosedAnswers_ClosedAnswerId",
-                        column: x => x.ClosedAnswerId,
-                        principalTable: "ClosedAnswers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_GivenClosedAnswers_GivenAnswers_GivenAnswerId",
-                        column: x => x.GivenAnswerId,
-                        principalTable: "GivenAnswers",
+                        name: "FK_QuestionResponses_SurveyResponses_SurveyResponseId",
+                        column: x => x.SurveyResponseId,
+                        principalTable: "SurveyResponses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OpenedAnswers",
+                name: "OpenResponses",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Text = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
-                    GivenAnswerId = table.Column<int>(type: "int", nullable: false)
+                    QuestionResponseId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OpenedAnswers", x => x.Id);
+                    table.PrimaryKey("PK_OpenResponses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OpenedAnswers_GivenAnswers_GivenAnswerId",
-                        column: x => x.GivenAnswerId,
-                        principalTable: "GivenAnswers",
+                        name: "FK_OpenResponses_QuestionResponses_QuestionResponseId",
+                        column: x => x.QuestionResponseId,
+                        principalTable: "QuestionResponses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SelectedOptions",
+                columns: table => new
+                {
+                    QuestionResponseId = table.Column<long>(type: "bigint", nullable: false),
+                    ClosedQuestionOptionId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SelectedOptions", x => new { x.QuestionResponseId, x.ClosedQuestionOptionId });
+                    table.ForeignKey(
+                        name: "FK_SelectedOptions_ClosedQuestionOptions_ClosedQuestionOptionId",
+                        column: x => x.ClosedQuestionOptionId,
+                        principalTable: "ClosedQuestionOptions",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_SelectedOptions_QuestionResponses_QuestionResponseId",
+                        column: x => x.QuestionResponseId,
+                        principalTable: "QuestionResponses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -330,29 +356,39 @@ namespace PollPulse.API.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClosedAnswers_QuestionId",
-                table: "ClosedAnswers",
+                name: "IX_ClosedQuestionOptions_QuestionId",
+                table: "ClosedQuestionOptions",
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GivenAnswers_QuestionId",
-                table: "GivenAnswers",
-                column: "QuestionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GivenClosedAnswers_ClosedAnswerId",
-                table: "GivenClosedAnswers",
-                column: "ClosedAnswerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OpenedAnswers_GivenAnswerId",
-                table: "OpenedAnswers",
-                column: "GivenAnswerId",
+                name: "IX_OpenResponses_QuestionResponseId",
+                table: "OpenResponses",
+                column: "QuestionResponseId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionResponses_QuestionId",
+                table: "QuestionResponses",
+                column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionResponses_SurveyResponseId",
+                table: "QuestionResponses",
+                column: "SurveyResponseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_SurveyId",
                 table: "Questions",
+                column: "SurveyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SelectedOptions_ClosedQuestionOptionId",
+                table: "SelectedOptions",
+                column: "ClosedQuestionOptionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SurveyResponses_SurveyId",
+                table: "SurveyResponses",
                 column: "SurveyId");
 
             migrationBuilder.CreateIndex(
@@ -380,22 +416,25 @@ namespace PollPulse.API.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "GivenClosedAnswers");
+                name: "OpenResponses");
 
             migrationBuilder.DropTable(
-                name: "OpenedAnswers");
+                name: "SelectedOptions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "ClosedAnswers");
+                name: "ClosedQuestionOptions");
 
             migrationBuilder.DropTable(
-                name: "GivenAnswers");
+                name: "QuestionResponses");
 
             migrationBuilder.DropTable(
                 name: "Questions");
+
+            migrationBuilder.DropTable(
+                name: "SurveyResponses");
 
             migrationBuilder.DropTable(
                 name: "Surveys");

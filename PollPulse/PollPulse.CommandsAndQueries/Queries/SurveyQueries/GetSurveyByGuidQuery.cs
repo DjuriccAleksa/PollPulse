@@ -1,5 +1,5 @@
 ﻿using PollPulse.CommandsAndQueries.Interfaces;
-using PollPulse.Common.DTO;
+using PollPulse.Common.DTO.SurveysDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

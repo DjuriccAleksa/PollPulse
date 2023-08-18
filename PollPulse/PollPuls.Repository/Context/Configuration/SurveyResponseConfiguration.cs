@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace PollPulse.Repository.Context.Configuration
 {
-    public class ClosedAnswerConfiguration : IEntityTypeConfiguration<ClosedAnswer>
+    public class SurveyResponseConfiguration : IEntityTypeConfiguration<SurveyResponse>
     {
-        public void Configure(EntityTypeBuilder<ClosedAnswer> builder)
+        public void Configure(EntityTypeBuilder<SurveyResponse> builder)
         {
-            builder.HasKey(ca => ca.Id);
+            builder.HasKey(sr => sr.Id);
 
-            builder.Property(ca => ca.TextOption)
+            builder.Property(sr => sr.DateAnswered)
                 .IsRequired()
-                .HasMaxLength(150);
+                .HasDefaultValueSql("getdate()");
 
-            builder.HasOne(ca => ca.Question)
-                .WithMany(q => q.ClosedAnswers)
-                .HasForeignKey(ca => ca.QuestionId)
+            builder.HasOne(sr => sr.Survey)
+                .WithMany(s => s.SurveyResponses)
+                .HasForeignKey(sr => sr.SurveyId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }

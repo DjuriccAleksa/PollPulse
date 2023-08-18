@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using PollPulse.CommandsAndQueries.Interfaces;
-using PollPulse.Common.DTO;
+using PollPulse.Common.DTO.UsersDTOs;
 using PollPulse.Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -11,5 +11,5 @@ using System.Threading.Tasks;
 
 namespace PollPulse.CommandsAndQueries.Commands.UserCommands
 {
-    public record RegisterUserCommand(UserRegisterDTO user) : ICommand<(IdentityResult registerResult, User user)>;
+    public record RegisterUserCommand(UserRegisterDTO User) : ICommand<(IdentityResult registerResult, User user)>;
 }

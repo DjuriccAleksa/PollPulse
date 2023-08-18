@@ -1,39 +1,37 @@
 ﻿using AutoMapper;
-using PollPulse.Common.DTO;
+using PollPulse.Common.DTO.ClosedQuestionOptionsDTOs;
+using PollPulse.Common.DTO.OpenResponsesDTOs;
+using PollPulse.Common.DTO.QuestionResponsesDTOs;
+using PollPulse.Common.DTO.QuestionsDTOs;
+using PollPulse.Common.DTO.SurveysDTOs;
+using PollPulse.Common.DTO.UsersDTOs;
 using PollPulse.Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PollPulse.CommandsAndQueries.Mapper
+namespace PollPulse.CommandsAndQueries.Mapper;
+
+public class MappingProfile : Profile
 {
-    public class MappingProfile : Profile
+    public MappingProfile()
     {
-        public MappingProfile()
-        {
-            CreateMap<UserRegisterDTO, User>();
-            CreateMap<User, UserDTO>();
+        CreateMap<UserRegisterDTO, User>();
+        CreateMap<User, UserDTO>();
 
-            CreateMap<ClosedAnswer, ClosedAnswerDTO>()
-                .ReverseMap();
-            CreateMap<OpenedAnswer, OpenedAnswerDTO>();
-            CreateMap<GivenAnswer, GivenAnswerDTO>();
+        CreateMap<ClosedQuestionOption, ClosedQuestionOptionDTO>()
+            .ReverseMap();
+        CreateMap<OpenResponse, OpenResponseDTO>();
+        CreateMap<QuestionResponse, QuestionResponseDTO>();
 
-            CreateMap<Question,QuestionDTO>()
-                .ForCtorParam("QuestionType",
-                opt => opt.MapFrom(src => src.QuestionType.ToString()))
-                .ReverseMap();
+        CreateMap<Question,QuestionDTO>()
+            .ForCtorParam("QuestionType",
+            opt => opt.MapFrom(src => src.QuestionType.ToString()))
+            .ReverseMap();
 
-            CreateMap<Survey, SurveyDTO>()
-                .ForCtorParam("TotalResponses",
-                opt => opt.MapFrom(src => (src.Questions.Any() && src.Questions.First().GivenAnswers != null) ? src.Questions.First().GivenAnswers.Count : 0));
-            CreateMap<SurveyCreateDTO, Survey>()
-                .ForMember(dest => dest.Questions, opt => opt.MapFrom(src => src.Questions));
-            CreateMap<Survey, SurveyUpdateDTO>()
-                .ReverseMap();
-            
-        }
+        CreateMap<Survey, SurveyDTO>()
+            .ForCtorParam("TotalResponses",
+            opt => opt.MapFrom(src => Convert.ToInt32(src.SurveyResponses.Count())));
+        CreateMap<SurveyCreateDTO, Survey>();
+        CreateMap<Survey, SurveyUpdateDTO>()
+            .ReverseMap();
+        
     }
 }

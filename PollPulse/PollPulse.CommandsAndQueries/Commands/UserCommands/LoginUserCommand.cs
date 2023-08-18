@@ -1,7 +1,7 @@
 ﻿using PollPulse.CommandsAndQueries.Interfaces;
-using PollPulse.Common.DTO;
+using PollPulse.Common.DTO.UsersDTOs;
 
 namespace PollPulse.CommandsAndQueries.Commands.UserCommands
 {
-    public record LoginUserCommand(UserLoginDTO user) : ICommand<(bool, string)>; 
+    public record LoginUserCommand(UserLoginDTO User) : ICommand<(bool, string)>; 
 }
