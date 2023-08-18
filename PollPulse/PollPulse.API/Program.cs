@@ -15,6 +15,11 @@ builder.Services.AddAutoMapper(typeof(PollPulse.CommandsAndQueries.Startup).Asse
 builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(typeof(PollPulse.CommandsAndQueries.Startup).Assembly));
 builder.Services.AddSmtpConfiguration(builder.Configuration);
 
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
+
 builder.Services.AddControllers(options =>
 {
     options.InputFormatters.Insert(0, GetJsonPatchInputFormatter());

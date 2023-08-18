@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <None Remove="Resources\EmailHtmlText.txt" />
+    <None Remove="Resources\ResetPasswordHtmlEmail.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\EmailHtmlText.txt" />
+    <EmbeddedResource Include="Resources\ResetPasswordHtmlEmail.txt" />
   </ItemGroup>
 
   <ItemGroup>
