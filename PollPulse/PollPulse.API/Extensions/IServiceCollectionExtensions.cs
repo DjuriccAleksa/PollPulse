@@ -17,7 +17,8 @@ namespace PollPulse.API.Extensions
                 builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader();
+                .AllowAnyHeader()
+                .WithExposedHeaders("X-Pagination");
             });
         });
 
@@ -25,7 +26,7 @@ namespace PollPulse.API.Extensions
                 opt.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
 
         public static void ConfigureIdentity(this IServiceCollection services) {
-            services.AddIdentity<User, IdentityRole<int>>(opt =>
+            services.AddIdentity<User, IdentityRole<long>>(opt =>
             {
                 opt.Password.RequireDigit = true;
                 opt.Password.RequireLowercase = true;

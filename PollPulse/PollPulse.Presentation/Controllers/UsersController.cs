@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PollPulse.CommandsAndQueries.Commands.UserCommands;
 using PollPulse.CommandsAndQueries.Notifications;
-using PollPulse.Common.DTO;
+using PollPulse.Common.DTO.UsersDTOs;
 
 namespace PollPulse.Presentation.Controllers
 {
@@ -37,7 +37,7 @@ namespace PollPulse.Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _publisher.Publish(new UserRegisteredEvent(result.user.Id));
+            await _publisher.Publish(new UserRegisteredEvent(result.user.Guid));
 
             return StatusCode(201);
         }

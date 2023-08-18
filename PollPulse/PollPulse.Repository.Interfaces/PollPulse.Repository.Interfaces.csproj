@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PollPulse.Common\PollPulse.Common.csproj" />
     <ProjectReference Include="..\PollPulse.Entities\PollPulse.Entities.csproj" />
   </ItemGroup>
 

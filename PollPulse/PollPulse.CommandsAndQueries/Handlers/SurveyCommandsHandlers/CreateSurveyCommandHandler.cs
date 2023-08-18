@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using PollPulse.CommandsAndQueries.Commands.SurveyCommands;
 using PollPulse.CommandsAndQueries.Interfaces;
-using PollPulse.Common.DTO;
+using PollPulse.Common.DTO.SurveysDTOs;
 using PollPulse.Entities.Models;
 using PollPulse.Repository.Interfaces.Unit_of_work;
 using System;

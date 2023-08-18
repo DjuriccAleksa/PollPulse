@@ -5,9 +5,9 @@ using System.Web;
 using Microsoft.Extensions.Options;
 using PollPulse.Entities.Options;
 using System.Reflection;
-using PollPulse.Common.DTO;
 using System.Net.Mail;
 using System.Net;
+using PollPulse.Common.DTO.UsersDTOs;
 
 namespace PollPulse.CommandsAndQueries.Handlers.Notifications
 {
@@ -23,7 +23,7 @@ namespace PollPulse.CommandsAndQueries.Handlers.Notifications
         }
         public async Task Handle(UserRegisteredEvent notification, CancellationToken cancellationToken)
         {
-            var userForDb = await _repository.UserRepository.GetUserById(notification.id);
+            var userForDb = await _repository.UserRepository.GetUserByGuid(notification.Guid);
 
             var token = await _repository.UserRepository.GenerateTokenForEmailConfirmation(userForDb);
 

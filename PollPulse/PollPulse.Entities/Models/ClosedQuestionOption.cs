@@ -2,14 +2,14 @@
 
 namespace PollPulse.Entities.Models
 {
-    public class ClosedAnswer : IEntity
+    public class ClosedQuestionOption : IEntity
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string TextOption { get; set; }
 
-        public int QuestionId { get; set; }
+        public long QuestionId { get; set; }
         public Question Question { get; set; }
 
-        public List<GivenClosedAnswer> GivenClosedAnswers { get; set; }
+        public List<SelectedOption> SelectedOptions { get; set; }
     }
 }

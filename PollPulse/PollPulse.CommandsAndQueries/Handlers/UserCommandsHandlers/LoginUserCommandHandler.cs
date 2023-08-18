@@ -8,16 +8,15 @@ namespace PollPulse.CommandsAndQueries.Handlers.UserCommandsHandlers
     public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, (bool Success, string Message)>
     {
         private readonly IUnitOfWorkRepository _repository;
-        private readonly IMapper _mapper;
 
-        public LoginUserCommandHandler(IUnitOfWorkRepository repository, IMapper mapper)
+        public LoginUserCommandHandler(IUnitOfWorkRepository repository)
         {
             _repository = repository;
-            _mapper = mapper;
+           
         }
         public async Task<(bool Success, string Message)> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
-            var result = await _repository.UserRepository.LoginUser(request.user.Username, request.user.Password);
+            var result = await _repository.UserRepository.LoginUser(request.User.Username, request.User.Password);
 
             string message = "";
 

@@ -14,8 +14,10 @@ namespace PollPulse.Repository.Unit_of_work
     public class UnitOfWorkRepository : IUnitOfWorkRepository
     {
         private readonly RepositoryContext _context;
+
         private readonly Lazy<IUserRepository> _userRepository;
         private readonly Lazy<ISurveyRepository> _surveyRepository;
+        private readonly Lazy<ISurveyResponseRepository> _surveyResponseRepository;
         private readonly Lazy<IQuestionRepository> _questionRepository;
         private readonly Lazy<IClosedAnswerRepository> _closedAnswerRepository;
         private readonly Lazy<IOpenedAnswerRepository> _openedAnswerRepository;
@@ -33,6 +35,7 @@ namespace PollPulse.Repository.Unit_of_work
         public IUserRepository UserRepository => _userRepository.Value;
 
         public ISurveyRepository SurveyRepository => _surveyRepository.Value;
+        public ISurveyResponseRepository SurveyResponseRepository => _surveyResponseRepository.Value;
 
         public IQuestionRepository QuestionRepository => throw new NotImplementedException();
 

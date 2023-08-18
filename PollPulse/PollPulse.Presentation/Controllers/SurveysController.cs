@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using PollPulse.CommandsAndQueries.Commands.SurveyCommands;
 using PollPulse.CommandsAndQueries.Queries.SurveyQueries;
-using PollPulse.Common.DTO;
+using PollPulse.Common.DTO.SurveysDTOs;
+using PollPulse.Common.RequestFeatrues;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace PollPulse.Presentation.Controllers
@@ -24,11 +26,13 @@ namespace PollPulse.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllSurveysForUser(Guid userGuid)
+        public async Task<IActionResult> GetAllSurveysForUser(Guid userGuid, [FromQuery] SurveySpecification surveySpecification)
         {
-            var surveys = await _sender.Send(new GetAllSurveysForUserQuery(userGuid));
+            var surveys = await _sender.Send(new GetAllSurveysForUserQuery(userGuid, surveySpecification));
 
-            return Ok(surveys);
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(surveys.PaginationData));
+
+            return Ok(surveys.Surveys);
         }
 
         [HttpGet("{surveyGuid:guid}", Name = "GetSurveyByGuid")]

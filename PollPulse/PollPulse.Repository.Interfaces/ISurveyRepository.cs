@@ -1,4 +1,5 @@
-﻿using PollPulse.Entities.Models;
+﻿using PollPulse.Common.RequestFeatrues;
+using PollPulse.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,6 @@ namespace PollPulse.Repository.Interfaces
         void CreateSurvey(Survey survey);
         void DeleteSurvey(Survey survey);
         Task<Survey?> GetByGuid(Guid userGuid, Guid surveyGuid);
-        Task<IEnumerable<Survey>> GetAllSurveysForUser(Guid userGuid);
+        Task<PaginationList<Survey>> GetAllSurveysForUser(Guid userGuid, SurveySpecification surveySpecification);
     }
 }

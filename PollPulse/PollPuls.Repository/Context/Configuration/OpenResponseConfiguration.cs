@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace PollPulse.Repository.Context.Configuration
 {
-    public class OpenedAnswerConfiguration : IEntityTypeConfiguration<OpenedAnswer>
+    public class OpenResponseConfiguration : IEntityTypeConfiguration<OpenResponse>
     {
-        public void Configure(EntityTypeBuilder<OpenedAnswer> builder)
+        public void Configure(EntityTypeBuilder<OpenResponse> builder)
         {
-            builder.HasKey(oa => oa.Id);
+            builder.HasKey(or => or.Id);
 
-            builder.Property(oa => oa.Text)
+            builder.Property(or => or.Text)
                 .IsRequired()
                 .HasColumnType("nvarchar(MAX)");
 
-            builder.HasOne(oa => oa.GivenAnswer)
-            .WithOne(ga => ga.OpenedAnswer)
-            .HasForeignKey<OpenedAnswer>(oa => oa.GivenAnswerId)
+            builder.HasOne(or => or.QuestionResponse)
+            .WithOne(ga => ga.OpenResponse)
+            .HasForeignKey<OpenResponse>(oa => oa.QuestionResponseId)
             .IsRequired();
         }
     }

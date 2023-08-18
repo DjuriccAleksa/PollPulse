@@ -1,17 +1,16 @@
 ﻿using PollPulse.Entities.Models.Base;
 
-namespace PollPulse.Entities.Models
+namespace PollPulse.Entities.Models;
+
+public class Question : IEntity
 {
-    public class Question : IEntity
-    {
-        public int Id { get; set; }
-        public string Text { get; set; }
-        public QuestionType QuestionType{ get; set; }
+    public long Id { get; set; }
+    public string Text { get; set; }
+    public QuestionType QuestionType{ get; set; }
 
-        public int SurveyId { get; set; }
-        public Survey Survey { get; set; }
+    public long SurveyId { get; set; }
+    public Survey Survey { get; set; }
 
-        public List<GivenAnswer> GivenAnswers { get; set; }
-        public List<ClosedAnswer> ClosedAnswers { get; set; }
-    }
+    public List<QuestionResponse> QuestionResponses { get; set; }
+    public List<ClosedQuestionOption> ClosedQuestionOptions { get; set; }
 }

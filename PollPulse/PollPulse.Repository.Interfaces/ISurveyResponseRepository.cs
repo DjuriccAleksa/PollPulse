@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PollPulse.Common.DTO
+namespace PollPulse.Repository.Interfaces
 {
-    public record UserDTO(string FirstName, string LastName, string Email, string Username);
+    public interface ISurveyResponseRepository
+    {
+    }
 }
