@@ -24,7 +24,7 @@ namespace PollPulse.CommandsAndQueries.Handlers.UserCommandsHandlers
             user.Guid = Guid.NewGuid();
 
             var registerResult = await _repository.UserRepository.RegisterUser(user, request.User.Password);
-
+            
             return (registerResult, user);
         }
     }

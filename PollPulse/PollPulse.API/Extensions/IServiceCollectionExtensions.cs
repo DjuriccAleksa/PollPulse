@@ -46,6 +46,8 @@ namespace PollPulse.API.Extensions
             .AddDefaultTokenProviders();
 
             services.AddDataProtection();
+
+            services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromHours(2));
         }
 
         public static void ConfigureUnitOfWorkRepository(this IServiceCollection services) =>

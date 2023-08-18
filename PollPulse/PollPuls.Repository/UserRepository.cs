@@ -25,10 +25,15 @@ namespace PollPulse.Repository
 
         public async Task<string> GenerateTokenForEmailConfirmation(User user) => await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
+        public async Task<string> GenerateTokenForPasswordResest(User user) => await _userManager.GeneratePasswordResetTokenAsync(user);
+
         public async Task<User?> GetUserById(int id) => await _userManager.FindByIdAsync(id.ToString());
 
         public async Task<User?> GetUserByGuid(Guid guid) => await _context.AppUsers.FirstOrDefaultAsync(u => u.Guid == guid);
+        public async Task<User?> GetUserByEmail(string email) => await _userManager.FindByEmailAsync(email);
 
         public async Task<IdentityResult> ConfirmUserEmail(User user, string token) => await _userManager.ConfirmEmailAsync(user, token);
+
+        public async Task<IdentityResult> ResetPassword(User user, string token, string password) => await _userManager.ResetPasswordAsync(user, token, password);  
     }
 }
