@@ -23,11 +23,15 @@ namespace PollPulse.Repository.Context.Configuration
                 .HasMaxLength(50);
 
             builder.Property(s => s.Description)
-                .HasMaxLength(int.MaxValue);  
+                .HasMaxLength(int.MaxValue)
+                .IsRequired(false);  
 
             builder.Property(s => s.DateCreated)
                 .IsRequired()
-                .HasDefaultValueSql("getdate()"); 
+                .HasDefaultValueSql("getdate()");
+
+            builder.Property(s => s.DateFinished)
+                .IsRequired(false);
 
             builder.HasOne(s => s.User)
                 .WithMany(u => u.Surveys)  

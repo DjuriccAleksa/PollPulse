@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PollPulse.CommandsAndQueries.Commands.User;
+using PollPulse.CommandsAndQueries.Commands.UserCommands;
 using PollPulse.CommandsAndQueries.Notifications;
-using PollPulse.Common.DTO;
+using PollPulse.Common.DTO.UsersDTOs;
 
 namespace PollPulse.Presentation.Controllers
 {
@@ -19,10 +19,21 @@ namespace PollPulse.Presentation.Controllers
             _publisher = publisher;
         }
 
+        [HttpGet("emailconfirmation")]
+        public async Task<IActionResult> ConfirmUserEmail(string token, string guid)
+        {
+            var result = await _sender.Send(new ConfirmUserEmailCommand(token, Guid.Parse(guid)));
+
+            if (!result.Succeeded)
+                return BadRequest("Error in email confirmation.");
+
+            return Ok();
+        }
+
         [HttpPost]
         public async Task<IActionResult> RegisterUser([FromBody] UserRegisterDTO userRegister)
         {
-            if (userRegister == null)
+            if (userRegister is null)
                 return BadRequest("User for register is null");
 
             var result = await _sender.Send(new RegisterUserCommand(userRegister));
@@ -37,7 +48,9 @@ namespace PollPulse.Presentation.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _publisher.Publish(new UserRegisteredEvent(result.user.Id));
+            var confirmationLink = await _sender.Send(new GenerateEmailConfirmationTokenCommand(result.user));
+
+            await _publisher.Publish(new UserRegisteredEvent(confirmationLink, result.user.Email!, "EmailHtmlText.txt"));
 
             return StatusCode(201);
         }
@@ -45,7 +58,7 @@ namespace PollPulse.Presentation.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LoginUser([FromBody] UserLoginDTO userLogin)
         {
-            if (userLogin == null)
+            if (userLogin is null)
                 return BadRequest("User for login is null");
              
             var result = await _sender.Send(new  LoginUserCommand(userLogin));
@@ -56,17 +69,40 @@ namespace PollPulse.Presentation.Controllers
             return Ok();
         }
 
-        [HttpGet("emailconfirmation")]
-        public async Task<IActionResult> ConfirmUserEmail(string token, string username)
+        [HttpPost("forgotPassword")]
+        public async Task<IActionResult> UserForgotPassword([FromBody] UserForgotPasswordDTO userForgotPassword)
         {
-            var result = await _sender.Send(new ConfirmUserEmailCommand(token, username));
+            if (userForgotPassword is null)
+                return BadRequest("Forgot password is null");
 
-            if (!result.Succeeded)
-                return BadRequest("Error in email confirmation.");
+            var resetLink = await _sender.Send(new GeneratePasswordResetTokenCommand(userForgotPassword.Email));
 
-            return Ok();                        
+            if (resetLink != "")
+                await _publisher.Publish(new UserForgotPasswordEvent(resetLink, userForgotPassword.Email, "ResetPasswordHtmlEmail.txt"));
+
+            return Ok();
         }
 
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetUserPassword([FromBody] UserResetPasswordDTO userResetPassword)
+        {
+            if (userResetPassword is null)
+                return BadRequest("User reset is null");
+
+            var result = await _sender.Send(new ResetUserPasswordCommand(userResetPassword.Token, Guid.Parse(userResetPassword.Guid), userResetPassword.Password));
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+
+                return BadRequest(ModelState);
+            }
+
+            return Ok();
+        }
 
     }
 }

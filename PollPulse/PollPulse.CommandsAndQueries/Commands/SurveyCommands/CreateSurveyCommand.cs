@@ -1,0 +1,7 @@
+﻿using PollPulse.CommandsAndQueries.Interfaces;
+using PollPulse.Common.DTO.SurveysDTOs;
+
+namespace PollPulse.CommandsAndQueries.Commands.SurveyCommands
+{
+    public record CreateSurveyCommand(Guid UserGuid, SurveyCreateDTO Survey) : ICommand<SurveyDTO>;
+}

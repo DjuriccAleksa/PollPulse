@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
+using PollPulse.Entities.Exceptions.BaseExceptions;
 using PollPulse.Entities.Exceptions.ExceptionModel;
 
 namespace PollPulse.API.Extensions
@@ -19,6 +20,7 @@ namespace PollPulse.API.Extensions
                     {
                         context.Response.StatusCode = contextFeature.Error switch
                         {
+                            NotFoundException => StatusCodes.Status404NotFound,
                             _ => StatusCodes.Status500InternalServerError
                         };
 
