@@ -8,15 +8,15 @@ public class SelectedOptionConfiguration : IEntityTypeConfiguration<SelectedOpti
 {
     public void Configure(EntityTypeBuilder<SelectedOption> builder)
     {
-        builder.HasKey(so => new { so.QuestionResponseId, so.ClosedQuestionOptionId});
+        builder.HasKey(so => new { so.SurveyId, so.QuestionId, so.ClosedQuestionOptionId, so.SurveyResponseId});
 
         builder.HasOne(so => so.QuestionResponse)
             .WithMany(ga => ga.SelectedOptions)
-            .HasForeignKey(so => so.QuestionResponseId);
+            .HasForeignKey(so => new {so.SurveyId, so.QuestionId, so.SurveyResponseId});
 
         builder.HasOne(so => so.ClosedQuestionOption)
             .WithMany(ca => ca.SelectedOptions)
-            .HasForeignKey(so => so.ClosedQuestionOptionId)
+            .HasForeignKey(so => new {so.SurveyId, so.QuestionId, so.ClosedQuestionOptionId })
             .OnDelete(DeleteBehavior.NoAction);
     }
 }

@@ -1,5 +1,11 @@
-﻿using PollPulse.Common.DTO.OpenResponsesDTOs;
+﻿using PollPulse.Common.DTO.SelectedOptionsDTOs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace PollPulse.Common.DTO.QuestionResponsesDTOs;
-
-public record QuestionResponseDTO(DateTime DateAnswered, OpenResponseDTO? OpenResponse);
+namespace PollPulse.Common.DTO.QuestionResponsesDTOs
+{
+    public record QuestionResponseDTO(string? Text, List<SelectedOptionDTO> SelectedOptions);
+}

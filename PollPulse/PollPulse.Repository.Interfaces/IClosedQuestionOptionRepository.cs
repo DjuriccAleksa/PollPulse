@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PollPulse.Repository.Interfaces
 {
-    public interface IGivenClosedAnswerRepository
+    public interface IClosedQuestionOptionRepository
     {
     }
 }

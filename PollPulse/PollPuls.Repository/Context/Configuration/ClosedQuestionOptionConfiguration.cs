@@ -8,7 +8,10 @@ public class ClosedQuestionOptionConfiguration : IEntityTypeConfiguration<Closed
 {
     public void Configure(EntityTypeBuilder<ClosedQuestionOption> builder)
     {
-        builder.HasKey(cqo => cqo.Id);
+        builder.HasKey(cqo => new {cqo.SurveyId, cqo.QuestionId, cqo.Id});
+
+        builder.Property(cqo => cqo.Id)
+            .ValueGeneratedOnAdd();
 
         builder.Property(cqo => cqo.TextOption)
             .IsRequired()
@@ -16,7 +19,7 @@ public class ClosedQuestionOptionConfiguration : IEntityTypeConfiguration<Closed
 
         builder.HasOne(cqo => cqo.Question)
             .WithMany(q => q.ClosedQuestionOptions)
-            .HasForeignKey(cqo => cqo.QuestionId)
+            .HasForeignKey(cqo => new {cqo.SurveyId, cqo.QuestionId})
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
     }

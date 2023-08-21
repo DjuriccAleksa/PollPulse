@@ -2,6 +2,7 @@
 using PollPulse.CommandsAndQueries.Interfaces;
 using PollPulse.CommandsAndQueries.Queries.SurveyQueries;
 using PollPulse.Common.DTO.SurveysDTOs;
+using PollPulse.Entities.Exceptions;
 using PollPulse.Entities.Models;
 using PollPulse.Repository.Interfaces.Unit_of_work;
 using System;
@@ -27,11 +28,11 @@ namespace PollPulse.CommandsAndQueries.Handlers.SurveyQueriesHandlers
         {
             var user = await _repository.UserRepository.GetUserByGuid(request.UserGuid);
             if (user is null)
-                throw new Exception("User is not found");
+                throw new UserNotFoundException(request.UserGuid);
 
             var surveyFromDb = await _repository.SurveyRepository.GetByGuid(request.UserGuid, request.SurveyGuid);
             if (surveyFromDb is null)
-                throw new Exception("Surve is not found");
+                throw new SurveyNotFoundException(request.SurveyGuid);
 
             var surveyDto = _mapper.Map<SurveyUpdateDTO>(surveyFromDb);
 

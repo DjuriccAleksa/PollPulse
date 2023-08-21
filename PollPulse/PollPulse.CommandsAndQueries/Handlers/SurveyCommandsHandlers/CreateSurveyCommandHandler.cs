@@ -2,6 +2,7 @@
 using PollPulse.CommandsAndQueries.Commands.SurveyCommands;
 using PollPulse.CommandsAndQueries.Interfaces;
 using PollPulse.Common.DTO.SurveysDTOs;
+using PollPulse.Entities.Exceptions;
 using PollPulse.Entities.Models;
 using PollPulse.Repository.Interfaces.Unit_of_work;
 using System;
@@ -26,7 +27,7 @@ namespace PollPulse.CommandsAndQueries.Handlers.SurveyCommandsHandlers
         {
             var userFromDb = await _repository.UserRepository.GetUserByGuid(request.UserGuid);
             if (userFromDb is null)
-                throw new Exception("User is not found");
+                throw new UserNotFoundException(request.UserGuid);
 
             var survey = _mapper.Map<Survey>(request.Survey);
             survey.Guid = Guid.NewGuid();

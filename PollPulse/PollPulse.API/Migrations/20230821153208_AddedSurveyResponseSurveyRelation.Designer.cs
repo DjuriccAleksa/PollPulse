@@ -12,8 +12,8 @@ using PollPulse.Repository.Context;
 namespace PollPulse.API.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20230816180409_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230821153208_AddedSurveyResponseSurveyRelation")]
+    partial class AddedSurveyResponseSurveyRelation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -160,52 +160,33 @@ namespace PollPulse.API.Migrations
 
             modelBuilder.Entity("PollPulse.Entities.Models.ClosedQuestionOption", b =>
                 {
+                    b.Property<long>("SurveyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("QuestionId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("QuestionId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("TextOption")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
+                    b.HasKey("SurveyId", "QuestionId", "Id");
 
                     b.ToTable("ClosedQuestionOptions");
                 });
 
-            modelBuilder.Entity("PollPulse.Entities.Models.OpenResponse", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("QuestionResponseId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionResponseId")
-                        .IsUnique();
-
-                    b.ToTable("OpenResponses");
-                });
-
             modelBuilder.Entity("PollPulse.Entities.Models.Question", b =>
                 {
+                    b.Property<long>("SurveyId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
@@ -216,17 +197,12 @@ namespace PollPulse.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(80)");
 
-                    b.Property<long>("SurveyId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasMaxLength(2147483647)
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("SurveyId");
+                    b.HasKey("SurveyId", "Id");
 
                     b.ToTable("Questions", t =>
                         {
@@ -236,11 +212,8 @@ namespace PollPulse.API.Migrations
 
             modelBuilder.Entity("PollPulse.Entities.Models.QuestionResponse", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<long>("SurveyId")
                         .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("QuestionId")
                         .HasColumnType("bigint");
@@ -248,9 +221,10 @@ namespace PollPulse.API.Migrations
                     b.Property<long>("SurveyResponseId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("QuestionId");
+                    b.HasKey("SurveyId", "QuestionId", "SurveyResponseId");
 
                     b.HasIndex("SurveyResponseId");
 
@@ -259,15 +233,21 @@ namespace PollPulse.API.Migrations
 
             modelBuilder.Entity("PollPulse.Entities.Models.SelectedOption", b =>
                 {
-                    b.Property<long>("QuestionResponseId")
+                    b.Property<long>("SurveyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("QuestionId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("ClosedQuestionOptionId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("QuestionResponseId", "ClosedQuestionOptionId");
+                    b.Property<long>("SurveyResponseId")
+                        .HasColumnType("bigint");
 
-                    b.HasIndex("ClosedQuestionOptionId");
+                    b.HasKey("SurveyId", "QuestionId", "ClosedQuestionOptionId", "SurveyResponseId");
+
+                    b.HasIndex("SurveyId", "QuestionId", "SurveyResponseId");
 
                     b.ToTable("SelectedOptions");
                 });
@@ -322,6 +302,9 @@ namespace PollPulse.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("SurveyId")
                         .HasColumnType("bigint");
@@ -472,22 +455,11 @@ namespace PollPulse.API.Migrations
                 {
                     b.HasOne("PollPulse.Entities.Models.Question", "Question")
                         .WithMany("ClosedQuestionOptions")
-                        .HasForeignKey("QuestionId")
+                        .HasForeignKey("SurveyId", "QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Question");
-                });
-
-            modelBuilder.Entity("PollPulse.Entities.Models.OpenResponse", b =>
-                {
-                    b.HasOne("PollPulse.Entities.Models.QuestionResponse", "QuestionResponse")
-                        .WithOne("OpenResponse")
-                        .HasForeignKey("PollPulse.Entities.Models.OpenResponse", "QuestionResponseId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("QuestionResponse");
                 });
 
             modelBuilder.Entity("PollPulse.Entities.Models.Question", b =>
@@ -503,15 +475,15 @@ namespace PollPulse.API.Migrations
 
             modelBuilder.Entity("PollPulse.Entities.Models.QuestionResponse", b =>
                 {
-                    b.HasOne("PollPulse.Entities.Models.Question", "Question")
-                        .WithMany("QuestionResponses")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("PollPulse.Entities.Models.SurveyResponse", "SurveyResponse")
                         .WithMany("QuestionResponses")
                         .HasForeignKey("SurveyResponseId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("PollPulse.Entities.Models.Question", "Question")
+                        .WithMany("QuestionResponses")
+                        .HasForeignKey("SurveyId", "QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -524,13 +496,13 @@ namespace PollPulse.API.Migrations
                 {
                     b.HasOne("PollPulse.Entities.Models.ClosedQuestionOption", "ClosedQuestionOption")
                         .WithMany("SelectedOptions")
-                        .HasForeignKey("ClosedQuestionOptionId")
+                        .HasForeignKey("SurveyId", "QuestionId", "ClosedQuestionOptionId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("PollPulse.Entities.Models.QuestionResponse", "QuestionResponse")
                         .WithMany("SelectedOptions")
-                        .HasForeignKey("QuestionResponseId")
+                        .HasForeignKey("SurveyId", "QuestionId", "SurveyResponseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -575,9 +547,6 @@ namespace PollPulse.API.Migrations
 
             modelBuilder.Entity("PollPulse.Entities.Models.QuestionResponse", b =>
                 {
-                    b.Navigation("OpenResponse")
-                        .IsRequired();
-
                     b.Navigation("SelectedOptions");
                 });
 

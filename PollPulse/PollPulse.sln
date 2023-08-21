@@ -9,13 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Entities", "PollP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Repository", "PollPuls.Repository\PollPulse.Repository.csproj", "{BF70E65A-542E-4443-9ED4-D1E595AA593B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollPulse.Repository.Interfaces", "PollPulse.Repository.Interfaces\PollPulse.Repository.Interfaces.csproj", "{5131E25D-08EB-424C-82F7-51335E7517C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Repository.Interfaces", "PollPulse.Repository.Interfaces\PollPulse.Repository.Interfaces.csproj", "{5131E25D-08EB-424C-82F7-51335E7517C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollPulse.CommandsAndQueries", "PollPulse.CommandsAndQueries\PollPulse.CommandsAndQueries.csproj", "{F6E059BB-0AE3-4FD7-B35D-5D1660A3144F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.CommandsAndQueries", "PollPulse.CommandsAndQueries\PollPulse.CommandsAndQueries.csproj", "{F6E059BB-0AE3-4FD7-B35D-5D1660A3144F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollPulse.Presentation", "PollPulse.Presentation\PollPulse.Presentation.csproj", "{371BB753-1F84-4C69-B977-9090B2889B64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Presentation", "PollPulse.Presentation\PollPulse.Presentation.csproj", "{371BB753-1F84-4C69-B977-9090B2889B64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollPulse.Common", "PollPulse.Common\PollPulse.Common.csproj", "{D26FCA5C-E138-4093-8021-C03BDFFA57C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Common", "PollPulse.Common\PollPulse.Common.csproj", "{D26FCA5C-E138-4093-8021-C03BDFFA57C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

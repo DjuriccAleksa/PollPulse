@@ -38,7 +38,7 @@ namespace PollPulse.Presentation.Controllers
         [HttpGet("{surveyGuid:guid}", Name = "GetSurveyByGuid")]
         public async Task<IActionResult> GetSurveyByGuid(Guid userGuid, Guid surveyGuid)
         {
-            var survey = await _sender.Send(new GetSurveyByGuidQuery(userGuid, surveyGuid));
+            var survey = await _sender.Send(new GetSurveyForUserByGuidQuery(userGuid, surveyGuid));
 
             return Ok(survey);
         }

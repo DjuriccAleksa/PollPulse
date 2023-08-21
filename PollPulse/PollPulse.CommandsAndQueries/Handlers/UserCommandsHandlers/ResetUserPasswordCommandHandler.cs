@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using PollPulse.CommandsAndQueries.Commands.UserCommands;
 using PollPulse.CommandsAndQueries.Interfaces;
+using PollPulse.Entities.Exceptions;
 using PollPulse.Repository.Interfaces.Unit_of_work;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace PollPulse.CommandsAndQueries.Handlers.UserCommandsHandlers
         {
             var user = await _repository.UserRepository.GetUserByGuid(request.Guid);
             if (user is null)
-                throw new Exception("User is not found");
+                throw new UserNotFoundException(request.Guid);
 
             var resetPasswordResult = await _repository.UserRepository.ResetPassword(user, request.Token, request.Password);
 

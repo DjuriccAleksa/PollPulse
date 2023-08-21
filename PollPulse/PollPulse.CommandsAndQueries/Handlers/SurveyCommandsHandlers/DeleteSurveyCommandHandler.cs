@@ -1,5 +1,6 @@
 ﻿using PollPulse.CommandsAndQueries.Commands.SurveyCommands;
 using PollPulse.CommandsAndQueries.Interfaces;
+using PollPulse.Entities.Exceptions;
 using PollPulse.Repository.Interfaces.Unit_of_work;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,11 @@ namespace PollPulse.CommandsAndQueries.Handlers.SurveyCommandsHandlers
         {
             var userFromDb = await _repostiory.UserRepository.GetUserByGuid(request.UserGuid);
             if (userFromDb is null)
-                throw new Exception("User is not found");
+                throw new UserNotFoundException(request.UserGuid);
 
             var surveyFromDb = await _repostiory.SurveyRepository.GetByGuid(request.UserGuid, request.SurveyGuid);
             if (surveyFromDb is null)
-                throw new Exception("Surve is not found");
+                throw new SurveyNotFoundException(request.SurveyGuid);
 
             _repostiory.SurveyRepository.DeleteSurvey(surveyFromDb);
             await _repostiory.Save();

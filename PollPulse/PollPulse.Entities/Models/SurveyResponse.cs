@@ -10,6 +10,7 @@ namespace PollPulse.Entities.Models
     public class SurveyResponse : IEntity
     {
         public long Id { get; set; }
+        public string Email { get; set; }
         public DateTime DateAnswered { get; set; }
 
         public long SurveyId { get; set; }

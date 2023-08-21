@@ -15,6 +15,6 @@ namespace PollPulse.Entities.Models
         public User User { get; set; }
 
         public List<Question> Questions { get; set; }
-        public List<SurveyResponse> SurveyResponses{ get; set; }
+        public List<SurveyResponse> SurveyResponses { get; set; }
     }
 }

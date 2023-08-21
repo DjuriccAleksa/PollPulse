@@ -16,9 +16,4 @@
     <EmbeddedResource Include="Resources\ResetPasswordHtmlEmail.txt" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTO\SelectedOptionsDTOs\" />
-    <Folder Include="DTO\SurveyResponsesDTOs\" />
-  </ItemGroup>
-
 </Project>
