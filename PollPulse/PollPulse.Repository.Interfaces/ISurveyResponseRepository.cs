@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PollPulse.Common.RequestFeatrues;
+using PollPulse.Entities.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,9 @@ namespace PollPulse.Repository.Interfaces
 {
     public interface ISurveyResponseRepository
     {
+        void SubmitNewResponse(SurveyResponse response);
+        Task<PaginationList<SurveyResponse>> GetSurveyResponsesForSurvey(long surveyId, SurveyResponseSpecification surveyResponseSpecification);
+
+
     }
 }

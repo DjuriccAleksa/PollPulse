@@ -18,7 +18,6 @@ public class RepositoryContext : IdentityDbContext<User, IdentityRole<long>, lon
     public DbSet<SurveyResponse> SurveyResponses { get; set; }
     public DbSet<Question> Questions{ get; set; }
     public DbSet<QuestionResponse> QuestionResponses { get; set; }
-    public DbSet<OpenResponse> OpenResponses{ get; set; }
     public DbSet<ClosedQuestionOption> ClosedQuestionOptions{ get; set; }
     public DbSet<SelectedOption> SelectedOptions { get; set; }
 
@@ -31,7 +30,6 @@ public class RepositoryContext : IdentityDbContext<User, IdentityRole<long>, lon
         builder.ApplyConfiguration(new SurveyResponseConfiguration());
         builder.ApplyConfiguration(new QuestionConfiguration());
         builder.ApplyConfiguration(new QuestionResponseConfiguration());
-        builder.ApplyConfiguration(new OpenResponseConfiguration());
         builder.ApplyConfiguration(new ClosedQuestionOptionConfiguration());
         builder.ApplyConfiguration(new SelectedOptionConfiguration());
     }

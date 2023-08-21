@@ -8,16 +8,20 @@ public class QuestionResponseConfiguration : IEntityTypeConfiguration<QuestionRe
 {
     public void Configure(EntityTypeBuilder<QuestionResponse> builder)
     {
-        builder.HasKey(qr => qr.Id);
+        builder.HasKey(qr => new {qr.SurveyId, qr.QuestionId, qr.SurveyResponseId});
+
+        builder.Property(qr => qr.Text)
+            .IsRequired(false);
 
         builder.HasOne(qr => qr.Question)
-            .WithMany(q => q.QuestionResponses) 
-            .HasForeignKey(qr => qr.QuestionId) 
-            .IsRequired() 
-            .OnDelete(DeleteBehavior.Restrict);
+            .WithMany(q => q.QuestionResponses)
+            .HasForeignKey(qr => new {qr.SurveyId, qr.QuestionId})
+            .IsRequired();
 
-        builder.HasOne(qr => qr.OpenResponse)
-        .WithOne(oa => oa.QuestionResponse)
-        .OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(qr => qr.SurveyResponse)
+        .WithMany(sr => sr.QuestionResponses)
+        .HasForeignKey(qr => qr.SurveyResponseId)
+        .IsRequired()
+        .OnDelete(DeleteBehavior.NoAction);
     }
 }

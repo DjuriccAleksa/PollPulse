@@ -3,6 +3,7 @@ using PollPulse.CommandsAndQueries.Interfaces;
 using PollPulse.CommandsAndQueries.Queries.SurveyQueries;
 using PollPulse.Common.DTO.SurveysDTOs;
 using PollPulse.Common.RequestFeatrues;
+using PollPulse.Entities.Exceptions;
 using PollPulse.Repository.Interfaces.Unit_of_work;
 using System;
 using System.Collections.Generic;
@@ -27,11 +28,10 @@ namespace PollPulse.CommandsAndQueries.Handlers.SurveyQueriesHandlers
         {
             var user = await  _repository.UserRepository.GetUserByGuid(request.Guid);
             if (user is null)
-                throw new Exception("User is not found");
+                throw new UserNotFoundException(request.Guid);
 
             var surveysFromDb = await  _repository.SurveyRepository.GetAllSurveysForUser(request.Guid, request.SurveySpecification);
-
-            var surveysToRetrun = _mapper.Map<IEnumerable<SurveyDTO>>(surveysFromDb);
+            var surveysToRetrun = _mapper.Map<List<SurveyDTO>>(surveysFromDb);
 
             return (Surveys: surveysToRetrun, PaginationData: surveysFromDb.PaginationData);
         }

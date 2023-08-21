@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,12 +12,13 @@ namespace PollPulse.Repository.Interfaces.Unit_of_work
         IUserRepository UserRepository { get; }
         ISurveyRepository SurveyRepository { get; }
         ISurveyResponseRepository SurveyResponseRepository { get; }
-        IQuestionRepository QuestionRepository { get; }
-        IOpenedAnswerRepository OpenedAnswerRepository { get; }
-        IClosedAnswerRepository ClosedAnswerRepository { get; }
-        IGivenAnswerRepository GivenAnswerRepository { get; }
-        IGivenClosedAnswerRepository GivenClosedAnswerRepository { get; }
+        IQuestionResponseRepository QuestionRepository { get; }
+        IClosedQuestionOptionRepository ClosedQuestionOptionRepository { get; }
+        IQuestionResponseRepository QuestionResponseRepository { get; }
+        ISelectedOptionRepository SelectedOptionRepository{ get; }
 
         Task Save();
+        Task<IDbContextTransaction> BeginTransaction();
+
     }
 }

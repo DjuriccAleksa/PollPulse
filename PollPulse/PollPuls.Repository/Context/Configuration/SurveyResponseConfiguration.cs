@@ -15,6 +15,9 @@ namespace PollPulse.Repository.Context.Configuration
         {
             builder.HasKey(sr => sr.Id);
 
+            builder.Property(sr => sr.Email)
+                .IsRequired(false);
+
             builder.Property(sr => sr.DateAnswered)
                 .IsRequired()
                 .HasDefaultValueSql("getdate()");
@@ -23,7 +26,9 @@ namespace PollPulse.Repository.Context.Configuration
                 .WithMany(s => s.SurveyResponses)
                 .HasForeignKey(sr => sr.SurveyId)
                 .IsRequired()
+                
                 .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

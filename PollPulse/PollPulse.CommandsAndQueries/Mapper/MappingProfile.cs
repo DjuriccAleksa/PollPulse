@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using PollPulse.Common.DTO.ClosedQuestionOptionsDTOs;
-using PollPulse.Common.DTO.OpenResponsesDTOs;
 using PollPulse.Common.DTO.QuestionResponsesDTOs;
 using PollPulse.Common.DTO.QuestionsDTOs;
+using PollPulse.Common.DTO.SelectedOptionsDTOs;
+using PollPulse.Common.DTO.SurveyResponsesDTOs;
 using PollPulse.Common.DTO.SurveysDTOs;
 using PollPulse.Common.DTO.UsersDTOs;
 using PollPulse.Entities.Models;
@@ -18,8 +19,8 @@ public class MappingProfile : Profile
 
         CreateMap<ClosedQuestionOption, ClosedQuestionOptionDTO>()
             .ReverseMap();
-        CreateMap<OpenResponse, OpenResponseDTO>();
         CreateMap<QuestionResponse, QuestionResponseDTO>();
+        CreateMap<SelectedOption, SelectedOptionDTO>();
 
         CreateMap<Question,QuestionDTO>()
             .ForCtorParam("QuestionType",
@@ -28,10 +29,18 @@ public class MappingProfile : Profile
 
         CreateMap<Survey, SurveyDTO>()
             .ForCtorParam("TotalResponses",
-            opt => opt.MapFrom(src => Convert.ToInt32(src.SurveyResponses.Count())));
+                opt => opt.MapFrom(src => src.SurveyResponses.Count())
+            );
+
         CreateMap<SurveyCreateDTO, Survey>();
         CreateMap<Survey, SurveyUpdateDTO>()
             .ReverseMap();
-        
+
+        CreateMap<SurveyResponseCreateDTO, SurveyResponse>()
+            .ForMember("QuestionResponses", opt => opt.Ignore());
+        CreateMap<SurveyResponse, SurveyResponseDTO>();
+
+        CreateMap<QuestionResponseCreateDTO, QuestionResponse>();
+        CreateMap<SelectedOptionCreateDTO, SelectedOption>();
     }
 }

@@ -24,6 +24,7 @@ public class SurveyRepository : Repository<Survey>, ISurveyRepository
             .Filter(surveySpecification.DateCreatedAfter)
             .Search(surveySpecification.SearchTerm!)
             .Sort(surveySpecification.OrderBy!)
+            .Include(s => s.SurveyResponses)
             .ToListAsync();
 
         return PaginationList<Survey>.ToPaginationList(surveys, surveySpecification.PageNumber, surveySpecification.PageSize);
@@ -31,9 +32,11 @@ public class SurveyRepository : Repository<Survey>, ISurveyRepository
 
     public async Task<Survey?> GetByGuid(Guid userGuid, Guid surveyGuid) => await
         GetByCodition(s => s.User.Guid == userGuid && s.Guid == surveyGuid)
-        .Include(s => s.Questions)
-            .ThenInclude(q => q.ClosedQuestionOptions)
-        .Include(s => s.Questions)
-            .ThenInclude(q => q.QuestionResponses)
+        .Include(s => s.SurveyResponses)
         .SingleOrDefaultAsync();
+
+    public async Task<long> GetSurveyId(Guid guid) => await 
+        GetByCodition(s => s.Guid == guid)
+        .Select(s => s.Id)
+        .FirstOrDefaultAsync();
 }
