@@ -13,11 +13,14 @@ namespace PollPulse.Repository.Context.Configuration
     {
         public void Configure(EntityTypeBuilder<Question> builder)
         {
-            builder.HasKey(q => q.Id);
+            builder.HasKey(q => new {q.SurveyId, q.Id});
+
+            builder.Property(q => q.Id)
+                .ValueGeneratedOnAdd();
 
             builder.Property(q => q.Text)
                 .IsRequired()
-                .HasMaxLength(int.MaxValue); // ili druga vrednost koju ste imali na umu
+                .HasMaxLength(int.MaxValue); 
 
             builder.Property(q => q.QuestionType)
                 .IsRequired()
