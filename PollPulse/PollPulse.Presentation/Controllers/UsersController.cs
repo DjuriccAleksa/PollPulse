@@ -63,10 +63,12 @@ namespace PollPulse.Presentation.Controllers
              
             var result = await _sender.Send(new  LoginUserCommand(userLogin));
 
-            if(!result.Item1)
+            if(result.Item2 != "")
                 return Unauthorized(result.Item2);
 
-            return Ok();
+            var token = await _sender.Send(new GenerateNewJwtTokenCommand(result.Item1));
+
+            return Ok(new {Token = token});
         }
 
         [HttpPost("forgotPassword")]

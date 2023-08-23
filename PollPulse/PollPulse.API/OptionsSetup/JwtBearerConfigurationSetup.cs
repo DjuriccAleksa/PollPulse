@@ -16,6 +16,7 @@ namespace PollPulse.API.OptionsSetup
 
         public void Configure(JwtBearerOptions options)
         {
+            var key = Environment.GetEnvironmentVariable("PollPulseSecurityKey");
             options.TokenValidationParameters = new()
             {
                 ValidateIssuer = true,
@@ -25,7 +26,7 @@ namespace PollPulse.API.OptionsSetup
 
                 ValidIssuer = _jwtConfiguration.Issuer,
                 ValidAudience = _jwtConfiguration.Audience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("PollPulseSecurityKey")))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
             };
         }
     }
