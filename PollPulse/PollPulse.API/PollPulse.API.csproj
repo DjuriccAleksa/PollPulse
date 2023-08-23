@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+	  <PreserveCompilationContext>true</PreserveCompilationContext>
+	  <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,8 @@
   <ItemGroup>
     <ProjectReference Include="..\PollPuls.Repository\PollPulse.Repository.csproj" />
     <ProjectReference Include="..\PollPulse.Presentation\PollPulse.Presentation.csproj" />
+    <ProjectReference Include="..\PollPulse.Services\PollPulse.Services.csproj" />
+    <ProjectReference Include="..\PollPulse.Validation\PollPulse.Validation.csproj" />
   </ItemGroup>
 
 </Project>
