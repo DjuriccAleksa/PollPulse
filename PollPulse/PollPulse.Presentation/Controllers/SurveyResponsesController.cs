@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PollPulse.Application.Commands.SurveyResponseCommands;
 using PollPulse.Application.Queries.SurveyQueries;
@@ -27,6 +28,7 @@ namespace PollPulse.Presentation.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllSurveyResponsesForSurvey(Guid surveyGuid, [FromQuery] SurveyResponseSpecification surveyResponseSpecification)
         {
             var surveyResponses = await _sender.Send(new GetAllSurveyResponsesForSurveyQuery(surveyGuid, surveyResponseSpecification));

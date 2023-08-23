@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using PollPulse.Application.Commands.UserCommands;
 using PollPulse.Application.Interfaces;
+using PollPulse.Entities.Models;
 using PollPulse.Repository.Interfaces.Unit_of_work;
 
 namespace PollPulse.Application.Handlers.UserCommandsHandlers
 {
-    public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, (bool Success, string Message)>
+    public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, (User? User , string Message)>
     {
         private readonly IUnitOfWorkRepository _repository;
 
@@ -14,9 +15,9 @@ namespace PollPulse.Application.Handlers.UserCommandsHandlers
             _repository = repository;
            
         }
-        public async Task<(bool Success, string Message)> Handle(LoginUserCommand request, CancellationToken cancellationToken)
+        public async Task<(User? User, string Message)> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
-            var result = await _repository.UserRepository.LoginUser(request.User.Username, request.User.Password);
+            var result = await _repository.UserRepository.LoginUser(request.User.Username, request.User.    Password);
 
             string message = "";
 
@@ -30,7 +31,9 @@ namespace PollPulse.Application.Handlers.UserCommandsHandlers
                     message = "Incorect username or password.";
             }
 
-            return (result.Succeeded, message);
+            var user = await _repository.UserRepository.GetUserByUsername(request.User.Username);
+
+            return (User: user, Message: message);
         }
     }
 }

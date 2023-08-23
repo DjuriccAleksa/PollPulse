@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using PollPulse.Application.Commands.SurveyCommands;
@@ -16,6 +17,7 @@ namespace PollPulse.Presentation.Controllers
 {
     [Route("api/users/{userGuid}/surveys")]
     [ApiController]
+    [Authorize]
     public class SurveysController : ControllerBase
     {
         private readonly ISender _sender;

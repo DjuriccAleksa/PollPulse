@@ -34,6 +34,8 @@ namespace PollPulse.Repository
 
         public async Task<IdentityResult> ConfirmUserEmail(User user, string token) => await _userManager.ConfirmEmailAsync(user, token);
 
-        public async Task<IdentityResult> ResetPassword(User user, string token, string password) => await _userManager.ResetPasswordAsync(user, token, password);  
+        public async Task<IdentityResult> ResetPassword(User user, string token, string password) => await _userManager.ResetPasswordAsync(user, token, password);
+
+        public async Task<User?> GetUserByUsername(string username) => await _userManager.FindByNameAsync(username);
     }
 }

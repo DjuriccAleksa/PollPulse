@@ -15,6 +15,7 @@ namespace PollPulse.Repository.Interfaces
         Task<User?> GetUserById(int id);
         Task<User?> GetUserByGuid(Guid guid);
         Task<User?> GetUserByEmail(string email);
+        Task<User?> GetUserByUsername (string username);    
         Task<string> GenerateTokenForEmailConfirmation(User user);
         Task<string> GenerateTokenForPasswordResest(User user);
         Task<IdentityResult> ConfirmUserEmail(User user, string token);

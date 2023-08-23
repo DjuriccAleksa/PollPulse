@@ -8,6 +8,7 @@ using PollPulse.Entities.Options;
 using PollPulse.Repository.Context;
 using PollPulse.Repository.Interfaces.Unit_of_work;
 using PollPulse.Repository.Unit_of_work;
+using PollPulse.Services;
 using PollPulse.Services.Email;
 
 namespace PollPulse.API.Extensions
@@ -64,7 +65,8 @@ namespace PollPulse.API.Extensions
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            });
+            })
+            .AddJwtBearer();
 
         public static void AddJwtConfiguration(this IServiceCollection services) =>
             services.ConfigureOptions<JwtConfigurationSetup>();
@@ -75,6 +77,7 @@ namespace PollPulse.API.Extensions
         public static void RegisterExternalServicesIntoDIContainer(this IServiceCollection services)
         {
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IJwtProviderService, JwtProviderService>();
         }
     }
 }
