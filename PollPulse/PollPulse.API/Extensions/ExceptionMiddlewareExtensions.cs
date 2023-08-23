@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
+using PollPulse.Entities.Exceptions;
 using PollPulse.Entities.Exceptions.BaseExceptions;
 using PollPulse.Entities.Exceptions.ExceptionModel;
+using System.Text.Json;
 
 namespace PollPulse.API.Extensions
 {
@@ -21,14 +23,20 @@ namespace PollPulse.API.Extensions
                         context.Response.StatusCode = contextFeature.Error switch
                         {
                             NotFoundException => StatusCodes.Status404NotFound,
+                            ValidationAppException => StatusCodes.Status422UnprocessableEntity,
                             _ => StatusCodes.Status500InternalServerError
                         };
 
-                        await context.Response.WriteAsync(new ExceptionDetails()
+                        if(contextFeature.Error is ValidationAppException exception)
+                            await context.Response.WriteAsync(JsonSerializer.Serialize(new { exception.Errors }));
+                        else 
                         {
-                            StatusCode = context.Response.StatusCode,
-                            Message = contextFeature.Error.Message
-                        }.ToString());
+                            await context.Response.WriteAsync(new ExceptionDetails()
+                            {
+                                StatusCode = context.Response.StatusCode,
+                                Message = contextFeature.Error.Message
+                            }.ToString());
+                        }
                     }
                 });
             });

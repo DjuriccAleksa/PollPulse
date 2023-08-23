@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using PollPulse.CommandsAndQueries.Commands.SurveyCommands;
-using PollPulse.CommandsAndQueries.Queries.SurveyQueries;
+using PollPulse.Application.Commands.SurveyCommands;
+using PollPulse.Application.Queries.SurveyQueries;
 using PollPulse.Common.DTO.SurveysDTOs;
 using PollPulse.Common.RequestFeatrues;
 using System;
