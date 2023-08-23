@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PollPulse.CommandsAndQueries.Commands.UserCommands;
-using PollPulse.CommandsAndQueries.Notifications;
+using PollPulse.Application.Commands.UserCommands;
+using PollPulse.Application.Notifications;
 using PollPulse.Common.DTO.UsersDTOs;
 
 namespace PollPulse.Presentation.Controllers
@@ -50,7 +50,7 @@ namespace PollPulse.Presentation.Controllers
 
             var confirmationLink = await _sender.Send(new GenerateEmailConfirmationTokenCommand(result.user));
 
-            await _publisher.Publish(new UserRegisteredEvent(confirmationLink, result.user.Email!, "EmailHtmlText.txt"));
+            await _publisher.Publish(new UserRegisteredEvent(result.user.Email!, $"{result.user.FirstName} {result.user.LastName}", confirmationLink));
 
             return StatusCode(201);
         }
@@ -63,10 +63,12 @@ namespace PollPulse.Presentation.Controllers
              
             var result = await _sender.Send(new  LoginUserCommand(userLogin));
 
-            if(!result.Item1)
+            if(result.Item2 != "")
                 return Unauthorized(result.Item2);
 
-            return Ok();
+            var token = await _sender.Send(new GenerateNewJwtTokenCommand(result.Item1));
+
+            return Ok(new {Token = token});
         }
 
         [HttpPost("forgotPassword")]
@@ -78,7 +80,7 @@ namespace PollPulse.Presentation.Controllers
             var resetLink = await _sender.Send(new GeneratePasswordResetTokenCommand(userForgotPassword.Email));
 
             if (resetLink != "")
-                await _publisher.Publish(new UserForgotPasswordEvent(resetLink, userForgotPassword.Email, "ResetPasswordHtmlEmail.txt"));
+                await _publisher.Publish(new UserForgotPasswordEvent(userForgotPassword.Email, resetLink));
 
             return Ok();
         }
@@ -89,7 +91,7 @@ namespace PollPulse.Presentation.Controllers
             if (userResetPassword is null)
                 return BadRequest("User reset is null");
 
-            var result = await _sender.Send(new ResetUserPasswordCommand(userResetPassword.Token, Guid.Parse(userResetPassword.Guid), userResetPassword.Password));
+            var result = await _sender.Send(new ResetUserPasswordCommand(userResetPassword));
 
             if (!result.Succeeded)
             {

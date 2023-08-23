@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using PollPulse.CommandsAndQueries.Commands.SurveyCommands;
-using PollPulse.CommandsAndQueries.Queries.SurveyQueries;
+using PollPulse.Application.Commands.SurveyCommands;
+using PollPulse.Application.Queries.SurveyQueries;
 using PollPulse.Common.DTO.SurveysDTOs;
 using PollPulse.Common.RequestFeatrues;
 using System;
@@ -16,6 +17,7 @@ namespace PollPulse.Presentation.Controllers
 {
     [Route("api/users/{userGuid}/surveys")]
     [ApiController]
+    [Authorize]
     public class SurveysController : ControllerBase
     {
         private readonly ISender _sender;

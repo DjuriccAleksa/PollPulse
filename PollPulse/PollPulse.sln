@@ -11,11 +11,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Repository", "Pol
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Repository.Interfaces", "PollPulse.Repository.Interfaces\PollPulse.Repository.Interfaces.csproj", "{5131E25D-08EB-424C-82F7-51335E7517C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.CommandsAndQueries", "PollPulse.CommandsAndQueries\PollPulse.CommandsAndQueries.csproj", "{F6E059BB-0AE3-4FD7-B35D-5D1660A3144F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Application", "PollPulse.Application\PollPulse.Application.csproj", "{F6E059BB-0AE3-4FD7-B35D-5D1660A3144F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Presentation", "PollPulse.Presentation\PollPulse.Presentation.csproj", "{371BB753-1F84-4C69-B977-9090B2889B64}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Common", "PollPulse.Common\PollPulse.Common.csproj", "{D26FCA5C-E138-4093-8021-C03BDFFA57C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Validation", "PollPulse.Validation\PollPulse.Validation.csproj", "{F949301D-D8AF-45B1-88BA-F07E0C2F0570}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollPulse.Services", "PollPulse.Services\PollPulse.Services.csproj", "{2F257FD6-61DA-44C4-B5DF-A4AF68DB496E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,14 @@ Global
 		{D26FCA5C-E138-4093-8021-C03BDFFA57C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D26FCA5C-E138-4093-8021-C03BDFFA57C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D26FCA5C-E138-4093-8021-C03BDFFA57C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F949301D-D8AF-45B1-88BA-F07E0C2F0570}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F949301D-D8AF-45B1-88BA-F07E0C2F0570}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F949301D-D8AF-45B1-88BA-F07E0C2F0570}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F949301D-D8AF-45B1-88BA-F07E0C2F0570}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F257FD6-61DA-44C4-B5DF-A4AF68DB496E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F257FD6-61DA-44C4-B5DF-A4AF68DB496E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F257FD6-61DA-44C4-B5DF-A4AF68DB496E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F257FD6-61DA-44C4-B5DF-A4AF68DB496E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

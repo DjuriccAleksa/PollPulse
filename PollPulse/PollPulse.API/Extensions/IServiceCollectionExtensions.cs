@@ -1,10 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using PollPulse.API.OptionsSetup;
+using PollPulse.Application.Interfaces.Services;
 using PollPulse.Entities.Models;
 using PollPulse.Entities.Options;
 using PollPulse.Repository.Context;
 using PollPulse.Repository.Interfaces.Unit_of_work;
 using PollPulse.Repository.Unit_of_work;
+using PollPulse.Services;
+using PollPulse.Services.Email;
 
 namespace PollPulse.API.Extensions
 {
@@ -52,8 +57,27 @@ namespace PollPulse.API.Extensions
 
         public static void ConfigureUnitOfWorkRepository(this IServiceCollection services) =>
             services.AddScoped<IUnitOfWorkRepository, UnitOfWorkRepository>();
-        public static void AddSmtpConfiguration(this IServiceCollection services, IConfiguration configuration) =>
-            services.Configure<SmtpConfiguration>(configuration.GetSection("SmtpSettings"));
-       
+        public static void AddSmtpConfiguration(this IServiceCollection services) =>
+            services.ConfigureOptions<SmtpConfigurationSetup>();
+
+        public static void ConfigureAuthentication(this IServiceCollection services) =>
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer();
+
+        public static void AddJwtConfiguration(this IServiceCollection services) =>
+            services.ConfigureOptions<JwtConfigurationSetup>();
+
+        public static void AddJwtBearerConfiguration(this IServiceCollection services) =>
+            services.ConfigureOptions<JwtBearerConfigurationSetup>();
+
+        public static void RegisterExternalServicesIntoDIContainer(this IServiceCollection services)
+        {
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IJwtProviderService, JwtProviderService>();
+        }
     }
 }
