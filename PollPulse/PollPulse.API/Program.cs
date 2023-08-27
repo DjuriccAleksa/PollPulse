@@ -15,6 +15,7 @@ builder.Services.ConfigureIdentity();
 builder.Services.ConfigureUnitOfWorkRepository();
 builder.Services.ConfigureAuthentication();
 
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAutoMapper(typeof(PollPulse.Application.Startup).Assembly);
 builder.Services.AddMediatR(opt => opt.RegisterServicesFromAssembly(typeof(PollPulse.Application.Startup).Assembly));
