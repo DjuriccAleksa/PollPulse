@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+/PollPulse/PollPulse.API/appsettings.json
+/PollPulse/PollPulse.API/appsettings.Development.json
