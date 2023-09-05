@@ -1,0 +1,12 @@
+{
+  "name": "PollPulse.Web",
+  "short_name": "PollPulse.Web",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#03173d",
+  "prefer_related_applications": false,
+  "icons": [
+   
+  ]
+}

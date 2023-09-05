@@ -399,3 +399,4 @@ FodyWeavers.xsd
 
 /PollPulse/PollPulse.API/appsettings.json
 /PollPulse/PollPulse.API/appsettings.Development.json
+/PollPulse/PollPulse.Web/wwwroot/appsettings.json
