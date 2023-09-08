@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PollPulse.Application.Commands.UserCommands;
 using PollPulse.Application.Notifications;
 using PollPulse.Common.DTO.UsersDTOs;
+using PollPulse.Common.DTOResults;
 
 namespace PollPulse.Presentation.Controllers
 {
@@ -27,7 +28,7 @@ namespace PollPulse.Presentation.Controllers
             if (!result.Succeeded)
                 return BadRequest("Error in email confirmation.");
 
-            return Ok();
+            return Redirect("https://localhost:5011/login?emailConfirmed=true");
         }
 
         [HttpPost]
@@ -40,19 +41,22 @@ namespace PollPulse.Presentation.Controllers
             
             if (!result.registerResult.Succeeded)
             {
-                foreach (var error in result.Item1.Errors)
+                return BadRequest(new UserRegisterResultDTO
                 {
-                    ModelState.TryAddModelError(error.Code, error.Description);
-                }
-
-                return BadRequest(ModelState);
+                    Errors = result.registerResult.Errors
+                    .Select(er => er.Description)
+                    .ToList()
+                });
             }
 
             var confirmationLink = await _sender.Send(new GenerateEmailConfirmationTokenCommand(result.user));
 
             await _publisher.Publish(new UserRegisteredEvent(result.user.Email!, $"{result.user.FirstName} {result.user.LastName}", confirmationLink));
 
-            return StatusCode(201);
+            return StatusCode(201, new UserRegisterResultDTO
+            {
+                IsSuccesfull = true
+            });
         }
 
         [HttpPost("login")]
@@ -63,12 +67,22 @@ namespace PollPulse.Presentation.Controllers
              
             var result = await _sender.Send(new  LoginUserCommand(userLogin));
 
-            if(result.Item2 != "")
-                return Unauthorized(result.Item2);
+            if (result.Item2 != "")
+                return Unauthorized(new UserLoginResultDTO
+                {
+                    Errors = new List<string>
+                    {
+                        result.Item2
+                    }
+                });
 
             var token = await _sender.Send(new GenerateNewJwtTokenCommand(result.Item1));
 
-            return Ok(new {Token = token});
+            return Ok(new UserLoginResultDTO
+            {
+                IsSuccesfull = true,
+                Token = token
+            });
         }
 
         [HttpPost("forgotPassword")]
@@ -95,15 +109,18 @@ namespace PollPulse.Presentation.Controllers
 
             if (!result.Succeeded)
             {
-                foreach (var error in result.Errors)
+                return BadRequest(new UserResetPasswordResultDTO
                 {
-                    ModelState.TryAddModelError(error.Code, error.Description);
-                }
-
-                return BadRequest(ModelState);
+                    Errors = result.Errors
+                   .Select(er => er.Description)
+                   .ToList()
+                });
             }
 
-            return Ok();
+            return Ok(new UserResetPasswordResultDTO
+            {
+                IsSuccesfull = true
+            });
         }
 
     }

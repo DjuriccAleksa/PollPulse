@@ -23,8 +23,11 @@ namespace PollPulse.Web.Authentication
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            var token = await _localStorage.GetItemAsync<string>(_applicationConfig.LocalStorageAuthKey);
+            // Kasnije napraviti delay na autentifikaciji
+            //await Task.Delay(2000);
 
+            var token = await _localStorage.GetItemAsync<string>(_applicationConfig.LocalStorageAuthKey);
+            Console.WriteLine(token);
             if (string.IsNullOrWhiteSpace(token))
                 return _anonymous;
 
@@ -35,11 +38,11 @@ namespace PollPulse.Web.Authentication
                     new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token), "jwtAuthType")));
         }
 
-        public void NotifyUserAuthentication(string email)
+        public void NotifyUserAuthentication(string token)
         {
             var authenticatedUser = new ClaimsPrincipal(
                 new ClaimsIdentity(
-                    new[] {new Claim(ClaimTypes.Name, email)}, "jwtAuthType"));
+                   JwtParser.ParseClaimsFromJwt(token), "jwtAuthType"));
             var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
 
             NotifyAuthenticationStateChanged(authState);

@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PollPulse.Common\PollPulse.Common.csproj" />
+    <ProjectReference Include="..\PollPulse.Web.Models\PollPulse.Web.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

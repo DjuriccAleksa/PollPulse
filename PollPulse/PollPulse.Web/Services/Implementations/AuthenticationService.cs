@@ -1,8 +1,10 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Options;
-using PollPulse.Common.DTO.UsersDTOs;
+using PollPulse.Common.DTOResults;
 using PollPulse.Web.Authentication;
+using PollPulse.Web.HttpClientUtility;
+using PollPulse.Web.Models.Authentication;
 using PollPulse.Web.OptionsSetup.ApplicationOptions;
 using PollPulse.Web.Services.Contracts;
 using System.Net.Http.Headers;
@@ -29,25 +31,17 @@ namespace PollPulse.Web.Services.Implementations
             _configuration = options.Value;
         }
 
-        public async Task<string> Login(UserLoginDTO userLogin)
+        public async Task<UserLoginResultDTO> Login(UserLoginModel userLogin)
         {
-            var content = JsonSerializer.Serialize(userLogin);
-            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var result = await HttpClientAPIHelper.PostAsync<UserLoginModel, UserLoginResultDTO>(_httpClient, "users/login", userLogin);
 
-            var authResult = await _httpClient.PostAsync("users/login", bodyContent);
-            var authContent = await authResult.Content.ReadAsStringAsync();
+            if(result.IsSuccesfull == false)
+                return result;
 
-            if (authResult.IsSuccessStatusCode == false)
-                return "";
+            await _localStorage.SetItemAsync(_configuration.LocalStorageAuthKey, result.Token);
+            ((AuthStateProvider)_authenticationStateProvider).NotifyUserAuthentication(result.Token);
 
-            var result = JsonSerializer.Deserialize<string>(
-                authContent,
-                new JsonSerializerOptions {PropertyNameCaseInsensitive = true} );
-
-            await _localStorage.SetItemAsync(_configuration.LocalStorageAuthKey, result);
-            ((AuthStateProvider)_authenticationStateProvider).NotifyUserAuthentication(userLogin.Username);
-
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result.Token);
 
             return result;
         }
@@ -57,6 +51,30 @@ namespace PollPulse.Web.Services.Implementations
             await _localStorage.RemoveItemAsync(_configuration.LocalStorageAuthKey);
             ((AuthStateProvider)_authenticationStateProvider).NotifyUserLogout();
             _httpClient.DefaultRequestHeaders.Authorization = null;
+        }
+
+        public async Task<UserRegisterResultDTO> Register(UserRegisterModel userRegister)
+        {
+            var result = await HttpClientAPIHelper.PostAsync<UserRegisterModel, UserRegisterResultDTO>(_httpClient, "users", userRegister);
+
+            return result;
+        }
+
+        public async Task<UserResetPasswordResultDTO> ResetPassword(UserResetPasswordModel userResetPassword)
+        {
+            var result = await HttpClientAPIHelper.PostAsync<UserResetPasswordModel, UserResetPasswordResultDTO>(_httpClient, "users/reset-password", userResetPassword);
+
+            return result; 
+        }
+
+        public async Task<bool> SendResetLink(UserForgotPasswordModel userForgotPasswordDTO)
+        {
+            var result = await HttpClientAPIHelper.PostAsync<UserForgotPasswordModel, string>(_httpClient, "users/forgotPassword", userForgotPasswordDTO);
+
+            if(result is null || result == "")
+                return true;
+
+            return false;
         }
     }
 }
