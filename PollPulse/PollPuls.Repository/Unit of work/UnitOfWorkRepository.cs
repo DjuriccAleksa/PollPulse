@@ -19,7 +19,7 @@ namespace PollPulse.Repository.Unit_of_work
         private readonly Lazy<IUserRepository> _userRepository;
         private readonly Lazy<ISurveyRepository> _surveyRepository;
         private readonly Lazy<ISurveyResponseRepository> _surveyResponseRepository;
-        private readonly Lazy<IQuestionResponseRepository> _questionRepository;
+        private readonly Lazy<IQuestionRepository> _questionRepository;
         private readonly Lazy<IClosedQuestionOptionRepository> _closedQuestionOptionRepository;
         private readonly Lazy<IQuestionResponseRepository> _questionResponseRepository;
         private readonly Lazy<ISelectedOptionRepository> _selectedOptionRepository;
@@ -33,13 +33,14 @@ namespace PollPulse.Repository.Unit_of_work
             _surveyRepository = new Lazy<ISurveyRepository>(() => new SurveyRepository(context));
             _surveyResponseRepository = new Lazy<ISurveyResponseRepository>(() => new SurveyResponseRepository(context));
             _questionResponseRepository = new Lazy<IQuestionResponseRepository>(() => new QuestionResponseRepository(context));
+            _questionRepository = new Lazy<IQuestionRepository>(() => new QuestionRepository(context));
         }
         public IUserRepository UserRepository => _userRepository.Value;
 
         public ISurveyRepository SurveyRepository => _surveyRepository.Value;
         public ISurveyResponseRepository SurveyResponseRepository => _surveyResponseRepository.Value;
 
-        public IQuestionResponseRepository QuestionRepository => throw new NotImplementedException();
+        public IQuestionRepository QuestionRepository => _questionRepository.Value;
 
 
         public IClosedQuestionOptionRepository ClosedQuestionOptionRepository => throw new NotImplementedException();

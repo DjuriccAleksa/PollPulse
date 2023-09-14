@@ -1,0 +1,6 @@
+﻿<section>
+    <label for="filterDate">Filter by creation date:</label>
+    <input type="date" id="filterDate" class="form-control" 
+       @bind-value="SelectedDate" @bind-value:event="oninput" @onchange="ApplyFilter" />
+       <button @onclick="ResetFilter">Reset Filter</button>
+</section>

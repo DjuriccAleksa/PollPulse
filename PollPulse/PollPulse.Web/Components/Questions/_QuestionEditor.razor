@@ -1,0 +1,32 @@
+﻿@using PollPulse.Web.Models;
+<div class="question-editor mt-5">
+    <h4>Add New Question</h4>
+
+    <EditForm Model="Question">
+        <DataAnnotationsValidator/>
+        <div class="form-group mt-3">
+            <label for="questionText">Question Text</label>
+            <input type="text" class="form-control" id="questionText" placeholder="Enter your question" @bind-value="Question.Text">
+        </div>
+
+        <div class="form-group mt-3">
+            <label for="questionType">Question Type</label>
+            <InputSelect class="form-control" id="questionType" ValueExpression="@(() => Question.QuestionType)" Value="Question.QuestionType" ValueChanged="@((string value) => OnQuestionTypeChanged(value))">
+                <option value="@QuestionType.OPEN">Open</option>
+                <option value="@QuestionType.CLOSED_SINGLED">Closed (Single Choice)</option>
+                <option value="@QuestionType.CLOSED_MULTIPLE">Closed (Multiple Choice)</option>
+            </InputSelect>
+        </div>
+
+        @if (showQuestionOptions)
+        {
+            <_QuestionOptionsEditor @ref="_optionsEditor" QuestionType="Question.QuestionType" ExistingOptions="Question.ClosedQuestionOptions" />
+        }
+
+        <div class="mt-4">
+            <button type="button" class="btn btn-success" @onclick="CreateQuestion">Add Question</button>
+        </div>
+
+    </EditForm>
+</div>
+

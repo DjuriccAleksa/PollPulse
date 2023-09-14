@@ -27,6 +27,8 @@ public class MappingProfile : Profile
             opt => opt.MapFrom(src => src.QuestionType.ToString()))
             .ReverseMap();
 
+        CreateMap<QuestionCreateDTO, Question>();
+
         CreateMap<Survey, SurveyDTO>()
             .ForCtorParam("TotalResponses",
                 opt => opt.MapFrom(src => src.SurveyResponses.Count())
@@ -38,6 +40,7 @@ public class MappingProfile : Profile
 
         CreateMap<SurveyResponseCreateDTO, SurveyResponse>()
             .ForMember("QuestionResponses", opt => opt.Ignore());
+
         CreateMap<SurveyResponse, SurveyResponseDTO>();
 
         CreateMap<QuestionResponseCreateDTO, QuestionResponse>();

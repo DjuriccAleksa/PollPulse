@@ -22,6 +22,6 @@ public class QuestionResponseConfiguration : IEntityTypeConfiguration<QuestionRe
         .WithMany(sr => sr.QuestionResponses)
         .HasForeignKey(qr => qr.SurveyResponseId)
         .IsRequired()
-        .OnDelete(DeleteBehavior.NoAction);
+        .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -33,7 +33,7 @@ namespace PollPulse.Web.Services.Implementations
 
         public async Task<UserLoginResultDTO> Login(UserLoginModel userLogin)
         {
-            var result = await HttpClientAPIHelper.PostAsync<UserLoginModel, UserLoginResultDTO>(_httpClient, "users/login", userLogin);
+            var result = await HttpClientAPIHelper.PostAsync<UserLoginModel, UserLoginResultDTO>(_httpClient, APIRoutes.LOGIN, userLogin);
 
             if(result.IsSuccesfull == false)
                 return result;
@@ -55,21 +55,21 @@ namespace PollPulse.Web.Services.Implementations
 
         public async Task<UserRegisterResultDTO> Register(UserRegisterModel userRegister)
         {
-            var result = await HttpClientAPIHelper.PostAsync<UserRegisterModel, UserRegisterResultDTO>(_httpClient, "users", userRegister);
+            var result = await HttpClientAPIHelper.PostAsync<UserRegisterModel, UserRegisterResultDTO>(_httpClient, APIRoutes.REGISTER , userRegister);
 
             return result;
         }
 
         public async Task<UserResetPasswordResultDTO> ResetPassword(UserResetPasswordModel userResetPassword)
         {
-            var result = await HttpClientAPIHelper.PostAsync<UserResetPasswordModel, UserResetPasswordResultDTO>(_httpClient, "users/reset-password", userResetPassword);
+            var result = await HttpClientAPIHelper.PostAsync<UserResetPasswordModel, UserResetPasswordResultDTO>(_httpClient, APIRoutes.RESET_PASSWORD, userResetPassword);
 
             return result; 
         }
 
         public async Task<bool> SendResetLink(UserForgotPasswordModel userForgotPasswordDTO)
         {
-            var result = await HttpClientAPIHelper.PostAsync<UserForgotPasswordModel, string>(_httpClient, "users/forgotPassword", userForgotPasswordDTO);
+            var result = await HttpClientAPIHelper.PostAsync<UserForgotPasswordModel, string>(_httpClient, APIRoutes.FORGOT_PASSWORD, userForgotPasswordDTO);
 
             if(result is null || result == "")
                 return true;

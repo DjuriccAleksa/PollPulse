@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using PollPulse.Web;
 using PollPulse.Web.Authentication;
 using PollPulse.Web.OptionsSetup.ApplicationOptions;
@@ -20,8 +21,11 @@ builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
 builder.Services.ConfigureOptions<ApplicationConfigSetup>();
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<ISurveysService, SurveysService>();
+builder.Services.AddScoped<ISurveyResponseService, SurveyResponseService>();
 
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetSection("AppParameteres")["apiUrl"])});
+
 
 await builder.Build().RunAsync();

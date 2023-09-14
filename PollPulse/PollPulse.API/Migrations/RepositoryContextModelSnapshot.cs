@@ -464,7 +464,7 @@ namespace PollPulse.API.Migrations
                     b.HasOne("PollPulse.Entities.Models.Survey", "Survey")
                         .WithMany("Questions")
                         .HasForeignKey("SurveyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Survey");
@@ -475,7 +475,7 @@ namespace PollPulse.API.Migrations
                     b.HasOne("PollPulse.Entities.Models.SurveyResponse", "SurveyResponse")
                         .WithMany("QuestionResponses")
                         .HasForeignKey("SurveyResponseId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PollPulse.Entities.Models.Question", "Question")
@@ -494,13 +494,13 @@ namespace PollPulse.API.Migrations
                     b.HasOne("PollPulse.Entities.Models.ClosedQuestionOption", "ClosedQuestionOption")
                         .WithMany("SelectedOptions")
                         .HasForeignKey("SurveyId", "QuestionId", "ClosedQuestionOptionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PollPulse.Entities.Models.QuestionResponse", "QuestionResponse")
                         .WithMany("SelectedOptions")
                         .HasForeignKey("SurveyId", "QuestionId", "SurveyResponseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ClosedQuestionOption");

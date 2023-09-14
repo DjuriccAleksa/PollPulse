@@ -1,0 +1,36 @@
+﻿.option-editor {
+    border: 1px solid #dee2e6;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+    background-color: #f8f9fa;
+}
+
+    .option-editor h5 {
+        margin-bottom: 20px;
+    }
+
+    .option-editor .option-input {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+        .option-editor .option-input input[type="text"] {
+            margin-left: 10px;
+            flex-grow: 1;
+        }
+
+    .option-editor .add-option-btn {
+        background-color: #007bff;
+        color: #ffffff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+        .option-editor .add-option-btn:hover {
+            background-color: #0056b3;
+        }

@@ -1,0 +1,10 @@
+﻿.question-editor {
+    border: 1px solid #e1e1e1;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+[data-show="true"] {
+    display: block !important;
+}

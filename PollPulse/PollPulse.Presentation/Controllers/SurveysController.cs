@@ -58,7 +58,6 @@ namespace PollPulse.Presentation.Controllers
             if (surveyCreate is null)
                 return BadRequest("Survey create is null");
 
-
             var userGuid = Guid.Parse(_contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var surveyCreated = await _sender.Send(new CreateSurveyCommand(userGuid, surveyCreate));
 

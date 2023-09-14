@@ -1,0 +1,23 @@
+﻿<div class="survey-card">
+    <div class="card-actions">
+        <button class="action-button close-survey" @onclick="() => FinishSurvey(Survey.Guid)">Finish</button>
+        <button class="action-button delete-survey" @onclick="() => DeleteSurvey(Survey.Guid)">Delete</button>
+    </div>
+    <h2 class="survey-title">@Survey.Title</h2>
+    <p class="survey-description">@Survey.Description</p>
+    <div class="survey-info">
+        @if (Survey.DateFinished > Survey.DateCreated)
+        {
+            <span class="survey-status finished">Finished</span>
+        }
+        else
+        {
+            <span class="survey-status active">Active</span>
+        }
+        <span class="survey-date">Date created: @Survey.DateCreated</span>
+    </div>
+    <div class="survey-responses">
+        Total responses: <span class="response-count">@Survey.TotalResponses</span>
+    </div>
+    <button class="survey-link" @onclick="CopyLinkToClipboard">Copy Survey Link</button>
+</div>
