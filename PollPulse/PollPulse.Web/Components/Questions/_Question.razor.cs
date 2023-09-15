@@ -38,7 +38,7 @@ namespace PollPulse.Web.Components.Questions
         {
            if(Response is not null)
             {
-                if (Question.QuestionType != QuestionType.OPEN)
+                if (Question.QuestionType != QuestionType.OPEN && (Response.SelectedOptions is null))
                     Response.SelectedOptions = new();
             }
 
@@ -47,16 +47,24 @@ namespace PollPulse.Web.Components.Questions
         private void HandleRadioButtonChange(QuestionOptionDisplayModel option)
         {
             Response.SelectedOptions.Clear();
-            Response.SelectedOptions.Add(new QuestionOptionCreateModel { ClosedQuestionOptionId = option.Id});
+            Response.SelectedOptions.Add(new QuestionOptionCreateModel { ClosedQuestionOptionId = option.ClosedQuestionOptionId});
         }
 
         private void HandleCheckboxChange(QuestionOptionDisplayModel option)
         {
-            var selectedOption = Response.SelectedOptions.FirstOrDefault(o => o.ClosedQuestionOptionId == option.Id);
+            var selectedOption = Response.SelectedOptions.FirstOrDefault(o => o.ClosedQuestionOptionId == option.ClosedQuestionOptionId);
             if(selectedOption is not null)
                 Response.SelectedOptions.Remove(selectedOption);
             else
-                Response.SelectedOptions?.Add(new QuestionOptionCreateModel { ClosedQuestionOptionId = option.Id});
+                Response.SelectedOptions?.Add(new QuestionOptionCreateModel { ClosedQuestionOptionId = option.ClosedQuestionOptionId});
+        }
+
+        private bool IsAnswerChecked(long optionId)
+        {
+            if(Response is null)
+                return false;
+
+            return Response.SelectedOptions.Any(o => o.ClosedQuestionOptionId == optionId);
         }
 
        

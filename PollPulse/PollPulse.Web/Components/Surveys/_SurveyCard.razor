@@ -1,7 +1,7 @@
-﻿<div class="survey-card">
+﻿<div class="survey-card" @onclick="NavigateToSurveyDetails">
     <div class="card-actions">
-        <button class="action-button close-survey" @onclick="() => FinishSurvey(Survey.Guid)">Finish</button>
-        <button class="action-button delete-survey" @onclick="() => DeleteSurvey(Survey.Guid)">Delete</button>
+        <button class="action-button close-survey" @onclick:stopPropagation="true"  @onclick="() => FinishSurvey(Survey.Guid)">Finish</button>
+        <button class="action-button delete-survey" @onclick:stopPropagation="true" @onclick="() => DeleteSurvey(Survey.Guid)">Delete</button>
     </div>
     <h2 class="survey-title">@Survey.Title</h2>
     <p class="survey-description">@Survey.Description</p>
@@ -19,5 +19,5 @@
     <div class="survey-responses">
         Total responses: <span class="response-count">@Survey.TotalResponses</span>
     </div>
-    <button class="survey-link" @onclick="CopyLinkToClipboard">Copy Survey Link</button>
+    <button class="survey-link" @onclick:stopPropagation="true" @onclick="CopyLinkToClipboard">Copy Survey Link</button>
 </div>

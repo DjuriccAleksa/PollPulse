@@ -1,0 +1,51 @@
+﻿@page "/surveys/survey-details/{surveyGuid}"
+
+@if (Survey is null)
+{
+    <p>
+        Loading...
+    </p>
+    return;
+}
+
+<div class="survey-details-container">
+    <div class="survey-info">
+        <h1>@Survey.Title</h1>
+        <p>@Survey.Description</p>
+        <div class="additional-info">
+            <span>Created on: @Survey.DateCreated.ToString("dd.MM.yyyy")</span>
+            <span>Number of Responses: @Survey.TotalResponses</span>
+            <span>Number of Questions: @Survey.Questions.Count</span>
+            <span>Status: Status</span>
+        </div>
+        <div class="actions">
+            <div class="qr-code">[QR Code Here]</div>
+            <button class="export-btn">Export All Responses</button>
+        </div>
+    </div>
+
+    <Tabs RenderMode="TabsRenderMode.LazyLoad" SelectedTab="survey-responses">
+        <Items>
+            <Tab Name="survey-responses">Individual responses</Tab>
+            <Tab Name="questions">Question responses</Tab>
+        </Items>
+        <Content>
+            <TabPanel Name="survey-responses">
+                <_IndividualSurveyResponses Survey="Survey"/>
+            </TabPanel>
+            <TabPanel Name="questions">
+                Drugi tab
+            </TabPanel>
+        </Content>
+    </Tabs>
+
+
+    @*<_CustomTab>
+        <_CustomTabSection TabTitle="Individual responses">
+            Sadrzaj prvog taba
+        </_CustomTabSection>
+        <_CustomTabSection TabTitle="Question responses">
+            Sadrzaj drugog taba
+        </_CustomTabSection>
+    </_CustomTab>*@
+</div>

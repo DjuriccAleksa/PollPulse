@@ -8,6 +8,9 @@ using PollPulse.Web;
 using PollPulse.Web.Authentication;
 using PollPulse.Web.OptionsSetup.ApplicationOptions;
 using PollPulse.Web.Services.Contracts;
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 using PollPulse.Web.Services.Implementations;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -25,7 +28,14 @@ builder.Services.AddScoped<ISurveysService, SurveysService>();
 builder.Services.AddScoped<ISurveyResponseService, SurveyResponseService>();
 
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetSection("AppParameteres")["apiUrl"])});
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetSection("AppParameteres")["apiUrl"]) });
+
+builder.Services.AddBlazorise(opt =>
+{
+    opt.Immediate = true;
+})
+    .AddBootstrapProviders()
+    .AddFontAwesomeIcons();
 
 
 await builder.Build().RunAsync();

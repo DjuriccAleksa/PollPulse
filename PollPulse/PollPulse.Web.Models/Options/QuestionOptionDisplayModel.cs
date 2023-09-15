@@ -8,7 +8,7 @@ namespace PollPulse.Web.Models.Options
 {
     public class QuestionOptionDisplayModel
     {
-        public long Id { get; set; }
+        public long ClosedQuestionOptionId { get; set; }
         public string TextOption { get; set; } = "";
     }
 }

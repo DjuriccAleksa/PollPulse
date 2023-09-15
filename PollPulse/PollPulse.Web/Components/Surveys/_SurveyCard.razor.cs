@@ -36,5 +36,10 @@ namespace PollPulse.Web.Components.Surveys
             await OnSurveyDelete.InvokeAsync(guid);
         }
 
+        void NavigateToSurveyDetails()
+        {
+            NavigationManager.NavigateTo($"surveys/survey-details/{Survey.Guid}");
+        }
+
     }
 }

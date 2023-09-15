@@ -18,11 +18,14 @@ public class MappingProfile : Profile
         CreateMap<User, UserDTO>();
 
         CreateMap<ClosedQuestionOption, ClosedQuestionOptionDTO>()
+            .ForCtorParam("ClosedQuestionOptionId",
+            opt => opt.MapFrom(src => src.Id))
             .ReverseMap();
+
         CreateMap<QuestionResponse, QuestionResponseDTO>();
         CreateMap<SelectedOption, SelectedOptionDTO>();
 
-        CreateMap<Question,QuestionDTO>()
+        CreateMap<Question, QuestionDTO>()
             .ForCtorParam("QuestionType",
             opt => opt.MapFrom(src => src.QuestionType.ToString()))
             .ReverseMap();

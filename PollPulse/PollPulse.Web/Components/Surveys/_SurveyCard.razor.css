@@ -1,7 +1,18 @@
-﻿.card-actions {
+﻿.survey-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 70%;
+    margin: 20px;
+    background-color: #fff;
+    cursor:pointer;
+}
+
+.card-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 10px; 
+    gap: 10px;
 }
 
 .action-button {
@@ -13,28 +24,18 @@
 }
 
     .action-button.close-survey {
-        background-color: #FFC107; 
+        background-color: #FFC107;
         color: #fff;
     }
 
     .action-button.delete-survey {
-        background-color: #FF5722; 
+        background-color: #FF5722;
         color: #fff;
     }
 
     .action-button:hover {
         opacity: 0.8;
     }
-
-.survey-card {
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 70%;
-    margin: 20px;
-    background-color: #fff;
-}
 
 .survey-title {
     margin-top: 0;

@@ -18,11 +18,11 @@
                 <div class="form-check">
                     @if (Question.QuestionType == Models.QuestionType.CLOSED_SINGLED)
                     {
-                        <input class="form-check-input" type="radio" name="question_@QuestionNumber" value="@option.Id" @onchange="() => HandleRadioButtonChange(option)" disabled="@IsReadOnly">
+                        <input class="form-check-input" type="radio" name="question_@QuestionNumber" value="@option.ClosedQuestionOptionId" checked="@IsAnswerChecked(option.ClosedQuestionOptionId)" @onchange="() => HandleRadioButtonChange(option)" disabled="@IsReadOnly">
                     }
                     else
                     {
-                        <input class="form-check-input" type="checkbox" name="question_@QuestionNumber" value="@option.Id" @onchange="() => HandleCheckboxChange(option)" disabled="@IsReadOnly">
+                        <input class="form-check-input" type="checkbox" name="question_@QuestionNumber" value="@option.ClosedQuestionOptionId"  checked="@IsAnswerChecked(option.ClosedQuestionOptionId)" @onchange="() => HandleCheckboxChange(option)" disabled="@IsReadOnly">
 
                     }
                     <label class="form-check-label" for="question_@QuestionNumber">
@@ -33,7 +33,14 @@
         }
         else
         {
-            <input type="text" class="form-control" placeholder="Your answer..." @bind="Response.Text" disabled="@IsReadOnly" />
+            @if (Response is not null)
+            {
+                <input type="text" class="form-control" placeholder="Your answer..." @bind="Response.Text" disabled="@IsReadOnly" />
+            }
+            else
+            {
+                <input type="text" class="form-control" placeholder="Your answer..." disabled="@IsReadOnly" />
+            }
         }
     </div>
 </div>

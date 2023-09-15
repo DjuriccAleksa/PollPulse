@@ -1,0 +1,13 @@
+﻿<div class="custom-tab-group">
+    <div class="tab-titles">
+        @foreach (var title in TabTitles)
+        {
+            <button @onclick="() => SetActiveTab(title)" class="@(title == ActiveTabTitle ? "active" : "")">
+                @title
+            </button>
+        }
+    </div>
+    <CascadingValue Value="this" Name="ParentTabComponent">
+        @ChildContent
+    </CascadingValue>
+</div>
