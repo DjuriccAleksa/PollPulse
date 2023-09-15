@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Validation", "Pol
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Services", "PollPulse.Services\PollPulse.Services.csproj", "{2F257FD6-61DA-44C4-B5DF-A4AF68DB496E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollPulse.Web", "PollPulse.Web\PollPulse.Web.csproj", "{15EB2A36-086C-49D5-B8DC-46AE52D9D0E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Web", "PollPulse.Web\PollPulse.Web.csproj", "{15EB2A36-086C-49D5-B8DC-46AE52D9D0E7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollPulse.Web.Models", "PollPulse.Web.Models\PollPulse.Web.Models.csproj", "{2849029C-646B-4552-A827-E2C60FE5DC12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{15EB2A36-086C-49D5-B8DC-46AE52D9D0E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15EB2A36-086C-49D5-B8DC-46AE52D9D0E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15EB2A36-086C-49D5-B8DC-46AE52D9D0E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2849029C-646B-4552-A827-E2C60FE5DC12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2849029C-646B-4552-A827-E2C60FE5DC12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2849029C-646B-4552-A827-E2C60FE5DC12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2849029C-646B-4552-A827-E2C60FE5DC12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

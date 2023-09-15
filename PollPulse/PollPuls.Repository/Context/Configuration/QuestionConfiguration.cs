@@ -38,7 +38,7 @@ namespace PollPulse.Repository.Context.Configuration
               .WithMany(s => s.Questions)
               .HasForeignKey(q => q.SurveyId)
               .IsRequired()
-              .OnDelete(DeleteBehavior.Cascade); 
+              .OnDelete(DeleteBehavior.NoAction); 
 
         }
     }

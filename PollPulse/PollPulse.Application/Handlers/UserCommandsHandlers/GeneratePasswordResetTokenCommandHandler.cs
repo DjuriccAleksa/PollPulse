@@ -32,7 +32,7 @@ namespace PollPulse.Application.Handlers.UserCommandsHandlers
 
             var baseUrl = _configuration.GetSection("BaseUrl").Value;
 
-            var confirmationLink = $"{baseUrl}/users/password-reset/?token={token}&guid={userFromDb.Guid}";
+            var confirmationLink = $"https://localhost:5011/reset-password?token={HttpUtility.UrlEncode(token)}&guid={userFromDb.Guid}";
 
             return confirmationLink;
         }

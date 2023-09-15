@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PollPulse.Repository.Interfaces
+namespace PollPulse.Repository.Interfaces;
+
+public interface ISelectedOptionRepository
 {
-    public interface ISelectedOptionRepository
-    {
-    }
 }

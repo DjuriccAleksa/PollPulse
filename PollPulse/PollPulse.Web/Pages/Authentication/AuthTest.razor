@@ -1,0 +1,31 @@
+﻿@page "/authTest"
+@using System.Security.Claims;
+<h3>AuthTest</h3>
+
+<AuthorizeView>
+    <Authorized>
+        @context.User.FindFirst(ClaimTypes.Name).Value
+    </Authorized>
+    <NotAuthorized>
+        Nisi autorizovan
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+    //[CascadingParameter]
+    //public Task<AuthenticationState> AuthenticationState { get; set; }
+    //private string username;
+    //private string guid;
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    var authState = await AuthenticationState;
+
+    //    if (authState.User.Identity.IsAuthenticated)
+    //    {
+    //        username = authState.User.FindFirst(ClaimTypes.Name).Value;
+    //        guid = authState.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+    //    }
+    //}
+}

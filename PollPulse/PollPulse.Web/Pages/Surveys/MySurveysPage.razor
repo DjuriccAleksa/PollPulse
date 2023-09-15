@@ -1,0 +1,23 @@
+﻿@page "/surveys"
+@page "/"
+@* korena ruta da bude ? @page "/" *@
+
+<PageTitle>My surveys</PageTitle>
+
+
+@if(Surveys is null)
+{
+    <p>Loading...</p>
+    return;
+}
+
+<button class="btn btn-info" @onclick="CreateNewSurvey">Create new survey</button>
+<_Search OnSearchChanged="SearchChanged" />
+<_Sort OnSortChanged="SortChanged" />
+<_Filter OnFilterChanged="FilterChanged" />
+
+@foreach(var survey in Surveys){
+    <_SurveyCard Survey="survey" OnSurveyDelete="HandleSurveyDelete" OnSurveyFinish="HandleSurveyFinish"></_SurveyCard>
+}
+
+<_Pagination PaginationData="PaginationData" Spread="2" SelectedPage="SelectedPage"/>

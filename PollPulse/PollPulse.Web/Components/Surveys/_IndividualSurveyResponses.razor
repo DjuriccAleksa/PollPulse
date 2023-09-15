@@ -1,0 +1,20 @@
+﻿@if(CurrentSurveyResponse is null)
+{
+    <p>Loading survey responses...</p>
+    return;
+}
+
+
+<div class="individual-survey-responses">
+
+    <div class="current-response-info">
+        Answer @PaginationData.CurretPage od @PaginationData.TotalCount
+    </div>
+
+    <_IndividualSurveyResponse Survey="Survey" Response="CurrentSurveyResponse" />
+
+    <div class="pagination-container mt-4">
+        <_Pagination PaginationData="PaginationData" Spread="1" SelectedPage="SelectedPage" />
+    </div>
+    
+</div>

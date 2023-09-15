@@ -18,7 +18,7 @@ public record SendEmailOnUserRegisteredEventHandler : INotificationHandler<UserR
 
     public SendEmailOnUserRegisteredEventHandler(IEmailService emailService) => _emailService = emailService;
 
-    public async Task Handle(UserRegisteredEvent notification, CancellationToken cancellationToken)
+    public Task Handle(UserRegisteredEvent notification, CancellationToken cancellationToken)
     {
         var emailData = new EmailData()
         {
@@ -29,7 +29,9 @@ public record SendEmailOnUserRegisteredEventHandler : INotificationHandler<UserR
 
         var templateName = "RegistrationEmailTemplate.cshtml";
 
-        await _emailService.SendEmail<string>(emailData, templateName, notification.ConfirmationLink);
+        _emailService.SendEmail<string>(emailData, templateName, notification.ConfirmationLink);
+
+        return Task.CompletedTask;
     }
 
 }

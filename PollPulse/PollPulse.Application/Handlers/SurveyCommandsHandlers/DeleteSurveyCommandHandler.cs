@@ -29,6 +29,7 @@ namespace PollPulse.Application.Handlers.SurveyCommandsHandlers
             if (surveyFromDb is null)
                 throw new SurveyNotFoundException(request.SurveyGuid);
 
+            _repostiory.QuestionRepository.DeleteQuestions(surveyFromDb.Id);
             _repostiory.SurveyRepository.DeleteSurvey(surveyFromDb);
             await _repostiory.Save();
 

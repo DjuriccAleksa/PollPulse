@@ -12,7 +12,7 @@ namespace PollPulse.Repository.Interfaces.Unit_of_work
         IUserRepository UserRepository { get; }
         ISurveyRepository SurveyRepository { get; }
         ISurveyResponseRepository SurveyResponseRepository { get; }
-        IQuestionResponseRepository QuestionRepository { get; }
+        IQuestionRepository QuestionRepository { get; }
         IClosedQuestionOptionRepository ClosedQuestionOptionRepository { get; }
         IQuestionResponseRepository QuestionResponseRepository { get; }
         ISelectedOptionRepository SelectedOptionRepository{ get; }

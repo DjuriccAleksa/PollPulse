@@ -54,8 +54,7 @@ namespace PollPulse.Services
             var claims = new List<Claim>()
             {
                 new(ClaimTypes.NameIdentifier, _user.Guid.ToString()),
-                new(JwtRegisteredClaimNames.Email, _user.Email),
-                new(JwtRegisteredClaimNames.UniqueName, _user.UserName)
+                new(ClaimTypes.Name, _user.UserName)
             };
 
             return claims;

@@ -33,6 +33,8 @@ public class SurveyRepository : Repository<Survey>, ISurveyRepository
     public async Task<Survey?> GetByGuid(Guid userGuid, Guid surveyGuid) => await
         GetByCodition(s => s.User.Guid == userGuid && s.Guid == surveyGuid)
         .Include(s => s.SurveyResponses)
+        .Include(s => s.Questions)
+            .ThenInclude(q => q.ClosedQuestionOptions)
         .SingleOrDefaultAsync();
 
     public async Task<long> GetSurveyId(Guid guid) => await 

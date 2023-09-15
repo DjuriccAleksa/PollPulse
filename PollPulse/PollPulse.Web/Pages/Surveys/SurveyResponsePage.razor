@@ -1,0 +1,41 @@
+﻿@page "/survey/{guid}"
+
+<PageTitle>Survey answer</PageTitle>
+
+@if (Survey is null)
+{
+    <p>Loading..........</p>
+    return;
+}
+
+<EditForm Model="SurveyResponse" OnValidSubmit="SubmitResponse">
+    <div class="survey-container">
+        <div class="survey-header">
+            <h1>@Survey.Title</h1>
+            <p>@Survey.Description</p>
+            <small>Created on: @Survey.DateCreated.ToString("dd.MM.yyyy")</small>
+        </div>
+
+        @if (Survey.DateFinished > Survey.DateCreated)
+        {
+            <div class="survey-closed-message">
+                <h2>Survey is closed</h2>
+                <p>Thank you for your interest, but this survey is no longer available for completion.</p>
+            </div>
+        }
+        else
+        {
+            <div class="survey-content">
+
+                <_QuestionList Questions="Survey.Questions" SurveyResponse="SurveyResponse"  />
+
+            </div>
+
+            <div class="survey-footer">
+                <button class="btn btn-primary">Submit Answers</button>
+            </div>
+        }
+
+        <DataAnnotationsValidator />
+    </div>
+</EditForm>

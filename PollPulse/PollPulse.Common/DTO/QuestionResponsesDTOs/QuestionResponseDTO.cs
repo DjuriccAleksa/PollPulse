@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace PollPulse.Common.DTO.QuestionResponsesDTOs
 {
-    public record QuestionResponseDTO(string? Text, List<SelectedOptionDTO> SelectedOptions);
+    public record QuestionResponseDTO(long QuestionId, string? Text, List<SelectedOptionDTO> SelectedOptions);
 }

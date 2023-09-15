@@ -12,11 +12,12 @@ public class SelectedOptionConfiguration : IEntityTypeConfiguration<SelectedOpti
 
         builder.HasOne(so => so.QuestionResponse)
             .WithMany(ga => ga.SelectedOptions)
-            .HasForeignKey(so => new {so.SurveyId, so.QuestionId, so.SurveyResponseId});
+            .HasForeignKey(so => new {so.SurveyId, so.QuestionId, so.SurveyResponseId})
+            .OnDelete(DeleteBehavior.NoAction);
+
 
         builder.HasOne(so => so.ClosedQuestionOption)
             .WithMany(ca => ca.SelectedOptions)
-            .HasForeignKey(so => new {so.SurveyId, so.QuestionId, so.ClosedQuestionOptionId })
-            .OnDelete(DeleteBehavior.NoAction);
+            .HasForeignKey(so => new { so.SurveyId, so.QuestionId, so.ClosedQuestionOptionId });
     }
 }
