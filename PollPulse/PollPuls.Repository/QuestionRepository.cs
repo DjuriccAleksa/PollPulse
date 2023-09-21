@@ -1,4 +1,5 @@
-﻿using PollPulse.Entities.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PollPulse.Entities.Models;
 using PollPulse.Repository.Base_repository;
 using PollPulse.Repository.Context;
 using PollPulse.Repository.Interfaces;
@@ -23,5 +24,11 @@ namespace PollPulse.Repository
         {
             _context.Questions.RemoveRange(_context.Questions.Where(q => q.SurveyId == surveyId));
         }
+
+        public async Task<Question?> GetQuestionWithResponses(long surveyId, long questionId) => await
+            GetByCodition(q => q.SurveyId == surveyId && q.Id == questionId)
+                .Include(q => q.QuestionResponses)
+                .ThenInclude(qr => qr.SelectedOptions)
+            .FirstOrDefaultAsync();
     }
 }

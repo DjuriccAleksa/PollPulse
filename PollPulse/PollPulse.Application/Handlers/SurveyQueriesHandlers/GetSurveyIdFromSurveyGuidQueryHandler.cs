@@ -18,9 +18,9 @@ namespace PollPulse.Application.Handlers.SurveyQueriesHandlers
             _repository = repository;
         }
 
-        public Task<long> Handle(GetSurveyIdFromSurveyGuidQuery request, CancellationToken cancellationToken)
+        public async Task<long>  Handle(GetSurveyIdFromSurveyGuidQuery request, CancellationToken cancellationToken)
         {
-            var id = _repository.SurveyRepository.GetSurveyId(request.SurveyGuid);
+            var id = await _repository.SurveyRepository.GetSurveyId(request.SurveyGuid);
             return id;
         }
     }

@@ -48,6 +48,7 @@ public partial class LogInPage
         }
         else
         {
+            await JSRuntime.InvokeVoidAsync("ShowToastr", "success", "New survey successfully created");
             NavigationManager.NavigateTo("/");
         }
     }
