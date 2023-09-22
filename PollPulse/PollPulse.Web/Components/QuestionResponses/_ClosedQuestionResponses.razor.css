@@ -1,0 +1,19 @@
+﻿.closed-response-container {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.closed-response-text {
+    font-size: 1.1em;
+    margin-bottom: 4px;
+}
+
+.closed-response-subtext {
+    font-size: 0.85em;
+    color: #FF5733;
+}

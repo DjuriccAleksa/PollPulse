@@ -1,0 +1,12 @@
+﻿@foreach (var option in Question.ClosedQuestionOptions)
+{
+    var count = Question.QuestionResponses.Count(r => r.SelectedOptions.Any(so => so.ClosedQuestionOption.ClosedQuestionOptionId == option.ClosedQuestionOptionId));
+
+    if (count == 0)
+        continue;
+
+    <div class="closed-response-container">
+        <span class="closed-response-text">@option.TextOption</span>
+        <span class="closed-response-subtext">Number of responses:@count </span>
+    </div>
+}

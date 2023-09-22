@@ -28,7 +28,8 @@ namespace PollPulse.Repository
         public async Task<Question?> GetQuestionWithResponses(long surveyId, long questionId) => await
             GetByCodition(q => q.SurveyId == surveyId && q.Id == questionId)
                 .Include(q => q.QuestionResponses)
-                .ThenInclude(qr => qr.SelectedOptions)
+                    .ThenInclude(qr => qr.SelectedOptions)
+                .Include(q => q.ClosedQuestionOptions)
             .FirstOrDefaultAsync();
     }
 }

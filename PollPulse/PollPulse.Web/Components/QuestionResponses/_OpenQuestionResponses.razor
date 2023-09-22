@@ -1,0 +1,14 @@
+﻿@{
+    var uniqueResponses = Question.QuestionResponses
+              .GroupBy(qr => qr.Text)
+              .Select(g => new { Text = g.Key, Count = g.Count() })
+              .ToList();
+}
+
+@foreach (var response in uniqueResponses)
+{
+    <div class="open-response-container">
+        <span class="open-response-text">@response.Text</span>
+        <span class="open-response-subtext">Number of responses: @response.Count</span>
+    </div>
+}

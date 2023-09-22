@@ -26,6 +26,7 @@ builder.Services.ConfigureOptions<ApplicationConfigSetup>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ISurveysService, SurveysService>();
 builder.Services.AddScoped<ISurveyResponseService, SurveyResponseService>();
+builder.Services.AddScoped<IQuestionsService, QuestionsService>();
 
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetSection("AppParameteres")["apiUrl"]) });

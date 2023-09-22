@@ -1,0 +1,37 @@
+﻿@using PollPulse.Web.Models.Questions;
+@using PollPulse.Web.Models;
+
+
+<div class="question-dropdown-container">
+    <DropdownList TItem="QuestionDisplayModel" TValue="QuestionDisplayModel"
+                  Data="QuestionsList" TextField="@(item => item.Text)" ValueField="@(item => item)"
+                  SelectedValue="@selectedQuestion" SelectedValueChanged="@LoadQuestionResponses"
+                  Color="Color.Primary"
+                  MaxMenuHeight="200px">
+                 @selectedQuestion.Text
+    </DropdownList>
+</div>
+
+@if (Question != null)
+{
+    <div class="question-responses-container">
+
+        <h3>@Question.Text</h3>
+
+        @if (Question.QuestionType == QuestionType.OPEN)
+        {
+            <_OpenQuestionResponses Question="@Question" />
+        }
+        else
+        {
+            <_ClosedQuestionResponses Question="@Question" />
+        }
+
+
+    </div>
+}
+
+
+
+
+
